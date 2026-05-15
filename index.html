@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#080618">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mundo Mágico">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="description" content="Ebook interativo educativo para crianças de 5+ anos com 18 atividades divertidas!">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a0533'/><text y='.9em' font-size='75' x='10'>🌍</text></svg>">
+<title>🌟 Mundo Mágico das Crianças</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;overflow-x:hidden;font-family:"Nunito",sans-serif;background:#080618;}
+button{font-family:"Nunito",sans-serif;}
+#bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.bstar{position:absolute;border-radius:50%;background:#fff;animation:fstar linear infinite;opacity:0;}
+@keyframes fstar{0%{opacity:0;transform:translateY(0)scale(0);}10%{opacity:.9;}90%{opacity:.4;}100%{opacity:0;transform:translateY(-100vh)scale(1);}}
+.scr{display:none;position:relative;z-index:1;min-height:100vh;}
+.scr.on{display:flex;flex-direction:column;}
+
+/* COVER */
+#s-cov{background:linear-gradient(160deg,#1a0533,#080618 45%,#001a33);align-items:center;justify-content:center;text-align:center;padding:28px 16px;}
+.cv-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 40% at 50% 28%,rgba(255,107,157,.2),transparent 70%),radial-gradient(ellipse 50% 30% at 72% 72%,rgba(123,200,246,.14),transparent 70%);}
+.cv-planet{font-size:clamp(56px,13vw,100px);animation:pflt 3s ease-in-out infinite alternate;filter:drop-shadow(0 0 26px rgba(255,200,71,.5));margin-bottom:8px;}
+@keyframes pflt{from{transform:translateY(0)rotate(-5deg);}to{transform:translateY(-16px)rotate(5deg);}}
+.cv-title{font-family:"Fredoka One",cursive;font-size:clamp(28px,8vw,58px);background:linear-gradient(135deg,#FF6B9D,#FFD700,#7BC8F6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:6px;}
+.cv-sub{font-size:clamp(11px,3vw,15px);color:rgba(255,255,255,.68);font-weight:700;margin-bottom:18px;}
+.cv-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-bottom:18px;}
+.bdg{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.16);border-radius:50px;padding:4px 11px;font-size:11px;font-weight:800;color:rgba(255,255,255,.9);}
+.cv-animals{display:flex;gap:6px;justify-content:center;font-size:clamp(24px,6vw,44px);margin-bottom:22px;}
+.cv-animals span{display:inline-block;animation:abounce 1.8s ease-in-out infinite alternate;}
+.cv-animals span:nth-child(2){animation-delay:.18s;}.cv-animals span:nth-child(3){animation-delay:.36s;}.cv-animals span:nth-child(4){animation-delay:.54s;}.cv-animals span:nth-child(5){animation-delay:.72s;}
+@keyframes abounce{from{transform:translateY(0);}to{transform:translateY(-13px);}}
+.btn-start{background:linear-gradient(135deg,#FF6B9D,#FFB347);color:#fff;font-family:"Fredoka One",cursive;font-size:clamp(15px,4vw,22px);border:none;border-radius:60px;padding:13px 46px;cursor:pointer;box-shadow:0 8px 28px rgba(255,107,157,.45);transition:all .2s;position:relative;overflow:hidden;}
+.btn-start::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.22),transparent);border-radius:inherit;}
+.btn-start:hover{transform:translateY(-3px)scale(1.04);}
+
+/* MAP */
+#s-map{background:linear-gradient(160deg,#0a1628,#080618 50%,#1a0533);padding:0 0 60px;}
+.mhdr{background:rgba(255,255,255,.04);border-bottom:1.5px solid rgba(255,255,255,.08);padding:11px 15px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.mlogo{font-family:"Fredoka One",cursive;font-size:17px;background:linear-gradient(135deg,#FF6B9D,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.tstar{display:flex;align-items:center;gap:5px;background:rgba(255,215,0,.12);border:1.5px solid rgba(255,215,0,.25);border-radius:50px;padding:4px 12px;font-family:"Fredoka One",cursive;font-size:14px;color:#FFD700;}
+.mttl{text-align:center;padding:22px 14px 8px;font-family:"Fredoka One",cursive;font-size:clamp(17px,5vw,28px);color:#fff;}
+.msub{text-align:center;color:rgba(255,255,255,.42);font-size:12px;font-weight:700;margin-bottom:20px;}
+.ppath{max-width:540px;margin:0 auto;padding:0 14px;display:flex;flex-direction:column;align-items:center;}
+.prow{display:flex;align-items:center;width:100%;justify-content:center;}
+.pconn{width:3px;height:32px;background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.02));border-radius:4px;margin:0 auto;}
+.pcard{background:#1a1630;border:2.5px solid rgba(255,255,255,.08);border-radius:16px;padding:12px 10px;width:180px;text-align:center;cursor:pointer;transition:all .22s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
+.pcard::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.04),transparent);border-radius:inherit;}
+.pcard.ul:hover{transform:translateY(-5px)scale(1.04);border-color:rgba(255,255,255,.2);box-shadow:0 14px 30px rgba(0,0,0,.4);}
+.pcard.lk{opacity:.35;cursor:not-allowed;filter:grayscale(.7);}
+.pcard.dn{border-color:rgba(255,215,0,.36);}
+.pcard.cur{border-color:rgba(255,107,157,.6);animation:pcurr 2s ease-in-out infinite;}
+@keyframes pcurr{0%,100%{box-shadow:0 0 24px rgba(255,107,157,.2);}50%{box-shadow:0 0 44px rgba(255,107,157,.42);}}
+.pem{font-size:30px;margin-bottom:3px;display:block;}
+.pnum{font-family:"Fredoka One",cursive;font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+.pname{font-family:"Fredoka One",cursive;font-size:12px;color:#fff;margin-bottom:4px;}
+.pstars{display:flex;justify-content:center;gap:1px;font-size:13px;}
+.ptag{display:inline-block;font-size:9px;font-weight:800;border-radius:50px;padding:2px 8px;margin-top:3px;}
+.tlk{background:rgba(255,255,255,.06);color:rgba(255,255,255,.27);}
+.tdn{background:rgba(255,215,0,.14);color:#FFD700;}
+.tcur{background:rgba(255,107,157,.14);color:#FF6B9D;}
+.tul{background:rgba(46,204,113,.11);color:#2ECC71;}
+
+/* ACTIVITY */
+#s-act{background:#F2EEFF;min-height:100vh;}
+.atop{background:#fff;border-bottom:3px solid #FFD700;padding:9px 13px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 3px 12px rgba(0,0,0,.07);}
+.abk{background:#FFD700;border:none;border-radius:50%;width:33px;height:33px;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 #E0A800;transition:all .13s;}
+.abk:hover{transform:translateY(2px);box-shadow:0 1px 0 #E0A800;}
+.ainf{text-align:center;}
+.albl{font-size:9px;font-weight:800;color:#bbb;letter-spacing:1px;text-transform:uppercase;}
+.attl{font-family:"Fredoka One",cursive;font-size:14px;color:#FF6B9D;}
+.astr{display:flex;gap:2px;font-size:18px;}
+.apw{background:#ddd6ff;height:6px;}
+.apf{height:100%;background:linear-gradient(90deg,#FF6B9D,#FFB347);transition:width .5s;}
+.abody{max-width:680px;margin:0 auto;padding:14px 12px 60px;}
+.instr{background:#fff;border-left:5px solid #FFD700;border-radius:0 12px 12px 0;padding:8px 13px;font-size:13px;font-weight:800;color:#7A5000;margin-bottom:14px;box-shadow:0 2px 8px rgba(255,215,0,.1);}
+.sbar{display:flex;align-items:center;gap:6px;background:#fff;border-radius:50px;padding:6px 13px;border:2px solid #eee;margin-bottom:12px;font-family:"Fredoka One",cursive;font-size:12px;color:#555;box-shadow:0 2px 6px rgba(0,0,0,.04);}
+.sv{color:#FF6B9D;font-size:16px;}
+
+/* CONNECT */
+.cgwrap{position:relative;display:flex;align-items:stretch;background:#fff;border-radius:18px;border:3px solid #eee;box-shadow:0 4px 14px rgba(0,0,0,.07);overflow:visible;padding:8px 0;min-height:340px;}
+.cgcol{display:flex;flex-direction:column;justify-content:space-around;padding:5px 9px;flex:1;z-index:2;}
+.cgcol.cl{align-items:flex-end;}.cgcol.cr{align-items:flex-start;}
+.cgsvg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible;}
+.cgitem{display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none;margin:3px 0;}
+.cgitem.cl{flex-direction:row;}.cgitem.cr{flex-direction:row-reverse;}
+.cgitem:hover .cgb{transform:scale(1.05);border-color:#FF6B9D;}
+.cgitem.sel .cgb{border-color:#FF6B9D;background:#FFF0F8;box-shadow:0 0 0 3px rgba(255,107,157,.18);}
+.cgitem.mat .cgb{border-color:#2ECC71;background:#F0FFF8;cursor:default;}
+.cgitem.mat:hover .cgb{transform:none;}
+.cgitem.wrg .cgb{border-color:#E74C3C;background:#FFF5F5;animation:shake .4s;}
+.cgb{background:#fff;border:3px solid #e5e5e5;border-radius:12px;padding:7px 10px;font-weight:800;font-size:12px;color:#333;transition:all .18s;box-shadow:0 2px 5px rgba(0,0,0,.05);text-align:center;min-width:76px;max-width:122px;}
+.cgb .be{font-size:26px;display:block;line-height:1.15;}
+.cgb .bl{font-size:9px;color:#aaa;margin-top:1px;font-weight:800;}
+.cgb .bn{font-size:13px;font-family:"Fredoka One",cursive;}
+.cgdot{width:13px;height:13px;border-radius:50%;background:#ddd;border:3px solid #ccc;flex-shrink:0;transition:all .17s;}
+.cgitem.sel .cgdot{background:#FF6B9D;border-color:#FF6B9D;box-shadow:0 0 0 3px rgba(255,107,157,.2);}
+.cgitem.mat .cgdot{background:#2ECC71;border-color:#2ECC71;}
+
+/* DONE BTN */
+.btnd{display:block;width:100%;max-width:260px;margin:22px auto 0;background:linear-gradient(135deg,#FF6B9D,#FFB347);color:#fff;font-family:"Fredoka One",cursive;font-size:18px;border:none;border-radius:60px;padding:12px 20px;cursor:pointer;box-shadow:0 6px 0 #CC3370,0 10px 22px rgba(255,107,157,.3);transition:opacity .4s,transform .2s,box-shadow .2s;opacity:0;pointer-events:none;}
+.btnd.vis{opacity:1;pointer-events:all;}
+.btnd:hover{transform:translateY(-3px);box-shadow:0 9px 0 #CC3370;}
+.btnd:active{transform:translateY(3px);box-shadow:0 3px 0 #CC3370;}
+
+/* WORD COMPLETE */
+.wcgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+.wccard{background:#fff;border-radius:15px;border:3px solid #eee;padding:12px 9px;text-align:center;box-shadow:0 3px 0 #e0e0e0;}
+.wcem{font-size:34px;margin-bottom:5px;}
+.wcw{font-family:"Fredoka One",cursive;font-size:19px;color:#333;letter-spacing:5px;margin-bottom:7px;min-height:26px;}
+.wcw .miss{color:#FF6B9D;border-bottom:3px dashed #FF6B9D;padding:0 1px;}
+.wcopts{display:flex;justify-content:center;gap:5px;flex-wrap:wrap;}
+.wopt{background:#FFD700;border:none;border-radius:8px;width:32px;height:32px;font-family:"Fredoka One",cursive;font-size:16px;cursor:pointer;transition:all .12s;box-shadow:0 3px 0 #E0A800;}
+.wopt:hover{transform:translateY(1px);box-shadow:0 1px 0 #E0A800;}
+.wopt.ok{background:#2ECC71;box-shadow:0 3px 0 #1A9A55;color:#fff;}
+.wopt.err{background:#E74C3C;box-shadow:0 3px 0 #B03030;color:#fff;animation:shake .4s;}
+.wopt:disabled{opacity:.45;cursor:default;}
+
+/* MEMORY GAME */
+.mem-grid{display:grid;gap:8px;}
+.mem-card{aspect-ratio:1;border-radius:12px;border:3px solid #ddd;background:#7B5EA7;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:clamp(18px,4vw,30px);transition:all .3s;box-shadow:0 3px 0 #5A3A8A;user-select:none;}
+.mem-card.flipped,.mem-card.matched{background:#fff;border-color:#eee;box-shadow:0 3px 0 #e0e0e0;}
+.mem-card.matched{border-color:#2ECC71;background:#F0FFF8;pointer-events:none;}
+.mem-card.back{background:#7B5EA7;}
+.mem-card span{display:none;}
+.mem-card.flipped span,.mem-card.matched span{display:block;}
+
+/* SEQUENCE */
+.seq-wrap{background:#fff;border-radius:18px;border:3px solid #eee;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.06);}
+.seq-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;min-height:58px;align-items:center;}
+.seq-item{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;border:3px solid #eee;background:#f9f9f9;}
+.seq-blank{width:52px;height:52px;border-radius:12px;border:3px dashed #FFB347;background:#FFFBF0;display:flex;align-items:center;justify-content:center;font-size:22px;color:#FFB347;font-family:"Fredoka One",cursive;}
+.seq-opts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.seq-opt{width:52px;height:52px;border-radius:12px;border:3px solid #eee;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:0 3px 0 #e0e0e0;transition:all .15s;}
+.seq-opt:hover{transform:translateY(-2px) scale(1.08);border-color:#FFB347;}
+.seq-opt.used{opacity:.3;pointer-events:none;}
+
+/* CLOCK */
+.clock-wrap{background:#fff;border-radius:18px;border:3px solid #eee;padding:16px;box-shadow:0 4px 14px rgba(0,0,0,.06);text-align:center;}
+.clock-svg{display:block;margin:0 auto 14px;}
+.clock-question{font-family:"Fredoka One",cursive;font-size:22px;color:#333;margin-bottom:12px;}
+.clock-opts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+.clock-opt{background:#fff;border:3px solid #eee;border-radius:14px;padding:10px 18px;font-family:"Fredoka One",cursive;font-size:18px;cursor:pointer;transition:all .18s;box-shadow:0 3px 0 #e0e0e0;}
+.clock-opt:hover{border-color:#FF6B9D;transform:translateY(-2px);}
+.clock-opt.ok{border-color:#2ECC71;background:#F0FFF8;color:#2ECC71;}
+.clock-opt.err{border-color:#E74C3C;background:#FFF5F5;animation:shake .4s;}
+
+/* PIANO */
+.piano-wrap{background:#222;border-radius:18px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.3);}
+.piano-keys{display:flex;gap:3px;justify-content:center;margin-bottom:14px;}
+.pkey-w{width:clamp(36px,7vw,54px);height:120px;background:#fff;border-radius:0 0 10px 10px;border:2px solid #ccc;cursor:pointer;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-family:"Fredoka One",cursive;font-size:14px;color:#888;transition:all .1s;box-shadow:0 4px 0 #aaa;}
+.pkey-w:active,.pkey-w.playing{background:#FFD700;color:#7A4A00;transform:translateY(3px);box-shadow:0 1px 0 #aaa;}
+.piano-songs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.psong-btn{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);border-radius:50px;padding:6px 14px;color:#fff;font-family:"Fredoka One",cursive;font-size:13px;cursor:pointer;transition:all .15s;}
+.psong-btn:hover{background:rgba(255,255,255,.2);}
+
+/* SHAPES */
+.shapes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;}
+.shape-card{background:#fff;border-radius:14px;border:3px solid #eee;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s;box-shadow:0 3px 0 #e0e0e0;}
+.shape-card:hover{transform:translateY(-2px) scale(1.05);}
+.shape-card.sel{border-color:#FF6B9D;background:#FFF0F8;}
+.shape-card.ok{border-color:#2ECC71;background:#F0FFF8;pointer-events:none;}
+.shape-card.err{border-color:#E74C3C;animation:shake .4s;}
+
+/* MAZE */
+.maze-wrap{background:#fff;border-radius:18px;border:3px solid #eee;padding:12px;box-shadow:0 4px 14px rgba(0,0,0,.06);}
+.maze-canvas{display:block;border-radius:10px;max-width:100%;}
+.maze-controls{display:flex;justify-content:center;gap:7px;margin-top:12px;flex-wrap:wrap;}
+.mz-btn{background:#FFD700;border:none;border-radius:10px;width:50px;height:50px;font-size:22px;cursor:pointer;box-shadow:0 4px 0 #E0A800;transition:all .12s;display:flex;align-items:center;justify-content:center;}
+.mz-btn:active{transform:translateY(3px);box-shadow:0 1px 0 #E0A800;}
+.maze-msg{text-align:center;font-family:"Fredoka One",cursive;font-size:16px;color:#FF6B9D;min-height:26px;margin-top:8px;}
+
+/* NUM ORDER */
+.nord-wrap{background:#fff;border-radius:18px;border:3px solid #eee;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.06);}
+.nord-slots{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:14px;}
+.nord-slot{width:54px;height:54px;border-radius:12px;border:3px dashed #ddd;display:flex;align-items:center;justify-content:center;font-family:"Fredoka One",cursive;font-size:20px;color:#ccc;background:#fafafa;transition:all .2s;}
+.nord-slot.filled{border-style:solid;border-color:#2ECC71;background:#F0FFF8;color:#2ECC71;}
+.nord-nums{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;}
+.nord-num{width:52px;height:52px;border-radius:11px;background:#FFD700;border:none;display:flex;align-items:center;justify-content:center;font-family:"Fredoka One",cursive;font-size:22px;color:#7A4A00;cursor:pointer;box-shadow:0 4px 0 #E0A800;transition:all .18s;}
+.nord-num:hover{transform:translateY(-2px)scale(1.08);}
+.nord-num.sel{background:#FF6B9D;color:#fff;box-shadow:0 4px 0 #CC3370;transform:scale(1.1);}
+.nord-num.used{opacity:.3;cursor:default;pointer-events:none;}
+
+/* STORY */
+.stbox{background:#fff;border-radius:16px;border:3px solid #FFD700;padding:16px 14px;box-shadow:0 6px 0 #E0A800;}
+.stem{font-size:48px;text-align:center;margin-bottom:5px;}
+.sttxt{font-size:13px;line-height:1.9;color:#444;margin-bottom:13px;}
+.sttxt strong{color:#FF6B9D;font-weight:900;}
+.stchs{display:flex;flex-direction:column;gap:7px;}
+.stbtn{background:linear-gradient(135deg,#FFB347,#FFD700);border:none;border-radius:11px;padding:10px 14px;font-family:"Nunito",sans-serif;font-size:13px;font-weight:800;color:#7A4A00;cursor:pointer;text-align:left;transition:all .18s;box-shadow:0 4px 0 #E0A800;}
+.stbtn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #E0A800;}
+
+/* EMOTION */
+.emo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
+.emo-card{background:#fff;border-radius:16px;border:3px solid #eee;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;box-shadow:0 3px 0 #e0e0e0;}
+.emo-card:hover{transform:translateY(-3px) scale(1.06);}
+.emo-card.sel{border-color:#FF6B9D;background:#FFF0F8;}
+.emo-face{font-size:42px;margin-bottom:6px;}
+.emo-blank{font-family:"Fredoka One",cursive;font-size:13px;color:#aaa;margin-bottom:8px;}
+.emo-opts{display:flex;flex-direction:column;gap:4px;}
+.emo-opt{background:#f0f0f0;border:none;border-radius:8px;padding:5px 8px;font-family:"Fredoka One",cursive;font-size:12px;color:#555;cursor:pointer;transition:all .13s;}
+.emo-opt:hover{background:#FFD700;color:#7A4A00;}
+.emo-opt.ok{background:#2ECC71;color:#fff;}
+.emo-opt.err{background:#E74C3C;color:#fff;animation:shake .3s;}
+
+/* PAINT */
+.paint-wrap{background:#fff;border-radius:18px;border:3px solid #eee;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.06);}
+.paint-colors{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:12px;}
+.paint-color{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.paint-color.sel{border-color:#333;transform:scale(1.18);}
+.paint-canvas{display:block;margin:0 auto;border-radius:12px;border:2px solid #eee;cursor:crosshair;touch-action:none;}
+.paint-hint{text-align:center;font-family:"Fredoka One",cursive;font-size:13px;color:#aaa;margin-top:8px;}
+
+/* ROUTINE ORDER */
+.routine-wrap{background:#fff;border-radius:18px;border:3px solid #eee;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.06);}
+.routine-slots{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px;}
+.routine-slot{width:70px;min-height:80px;border-radius:13px;border:3px dashed #ddd;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fafafa;transition:all .2s;padding:6px;}
+.routine-slot .rnum{font-family:"Fredoka One",cursive;font-size:11px;color:#ccc;margin-bottom:3px;}
+.routine-slot.filled{border-style:solid;border-color:#2ECC71;background:#F0FFF8;}
+.routine-opts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.routine-opt{width:70px;min-height:80px;border-radius:13px;border:3px solid #eee;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 0 #e0e0e0;transition:all .18s;padding:6px;font-size:26px;text-align:center;}
+.routine-opt .rlabel{font-family:"Fredoka One",cursive;font-size:10px;color:#888;margin-top:3px;}
+.routine-opt:hover{transform:translateY(-2px) scale(1.06);border-color:#FFB347;}
+.routine-opt.used{opacity:.3;pointer-events:none;}
+
+/* FRUIT SORT */
+.sort-wrap{background:#fff;border-radius:18px;border:3px solid #eee;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.06);}
+.sort-buckets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.sort-bucket{border-radius:14px;border:3px dashed #ddd;padding:10px;min-height:100px;text-align:center;transition:border-color .2s;}
+.sort-bucket.highlight{border-color:#2ECC71;background:#F9FFF9;}
+.sort-bucket-title{font-family:"Fredoka One",cursive;font-size:14px;color:#555;margin-bottom:8px;}
+.sort-items-placed{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;min-height:36px;}
+.sort-items{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.sort-item{font-size:28px;cursor:pointer;border-radius:10px;border:2px solid #eee;padding:6px;background:#fff;box-shadow:0 2px 0 #e0e0e0;transition:all .15s;}
+.sort-item:hover{transform:scale(1.15);border-color:#FFB347;}
+.sort-item.used{opacity:.3;pointer-events:none;}
+
+/* PHASE COMPLETE */
+#s-done{background:linear-gradient(160deg,#0a1628,#080618,#1a0533);align-items:center;justify-content:center;text-align:center;padding:28px 14px;}
+.ctro{font-size:74px;animation:trophyin .9s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes trophyin{from{transform:scale(0)rotate(-20deg);opacity:0;}to{transform:scale(1)rotate(0);opacity:1;}}
+.ctit{font-family:"Fredoka One",cursive;font-size:clamp(20px,6vw,40px);background:linear-gradient(135deg,#FFD700,#FFB347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:10px 0 4px;}
+.cname{font-family:"Fredoka One",cursive;font-size:15px;color:rgba(255,255,255,.58);margin-bottom:18px;}
+.cstars{display:flex;justify-content:center;gap:7px;font-size:clamp(32px,8vw,50px);margin-bottom:20px;}
+.cstar{opacity:0;transform:scale(0);animation:spop .4s cubic-bezier(.34,1.56,.64,1) forwards;}
+.cstar:nth-child(2){animation-delay:.2s;}.cstar:nth-child(3){animation-delay:.4s;}
+@keyframes spop{to{opacity:1;transform:scale(1);}}
+.cmsg{font-size:13px;font-weight:700;color:rgba(255,255,255,.5);max-width:300px;margin:0 auto 24px;line-height:1.7;}
+.cbtns{display:flex;flex-direction:column;gap:9px;align-items:center;width:100%;max-width:260px;}
+.btnext{width:100%;background:linear-gradient(135deg,#FF6B9D,#FFB347);color:#fff;font-family:"Fredoka One",cursive;font-size:17px;border:none;border-radius:60px;padding:12px;cursor:pointer;box-shadow:0 6px 0 #CC3370;transition:all .2s;}
+.btnext:hover{transform:translateY(-2px);}
+.btsec{width:100%;background:rgba(255,255,255,.08);color:rgba(255,255,255,.58);font-family:"Fredoka One",cursive;font-size:13px;border:1.5px solid rgba(255,255,255,.13);border-radius:60px;padding:9px;cursor:pointer;transition:all .2s;}
+.btsec:hover{background:rgba(255,255,255,.13);color:#fff;}
+
+/* FINAL */
+#s-fin{background:linear-gradient(160deg,#0a1628,#080618,#1a0533);align-items:center;justify-content:center;text-align:center;padding:28px 14px;}
+.fntit{font-family:"Fredoka One",cursive;font-size:clamp(20px,6vw,42px);background:linear-gradient(135deg,#FF6B9D,#FFD700,#7BC8F6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.fndip{background:linear-gradient(135deg,rgba(255,215,0,.1),rgba(255,107,157,.07));border:2px solid rgba(255,215,0,.22);border-radius:20px;padding:20px;max-width:360px;width:100%;margin:0 auto 20px;}
+.btnrst{background:linear-gradient(135deg,#7BC8F6,#9B59B6);color:#fff;font-family:"Fredoka One",cursive;font-size:17px;border:none;border-radius:60px;padding:12px 38px;cursor:pointer;box-shadow:0 6px 0 #5A3A8A;transition:all .2s;}
+.btnrst:hover{transform:translateY(-2px);}
+
+/* FEEDBACK */
+.fbpop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%)scale(0);background:#fff;border-radius:16px;padding:14px 28px;text-align:center;font-family:"Fredoka One",cursive;font-size:20px;box-shadow:0 20px 60px rgba(0,0,0,.22);z-index:999;transition:transform .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.fbpop.on{transform:translate(-50%,-50%)scale(1);}
+.fbpop.ok{color:#2ECC71;border:4px solid #2ECC71;}
+.fbpop.err{color:#E74C3C;border:4px solid #E74C3C;}
+.cf{position:fixed;pointer-events:none;z-index:9999;animation:cfall 2.2s ease-in forwards;}
+@keyframes cfall{from{transform:translateY(-20px)rotate(0deg);opacity:1;}to{transform:translateY(110vh)rotate(800deg);opacity:0;}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+</style>
+</head>
+<body>
+
+<!-- PWA INSTALL BANNER -->
+<div id="install-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:#1E1B3A;border:2px solid rgba(255,215,0,.4);border-radius:20px;padding:14px 18px;align-items:center;gap:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:340px;width:calc(100% - 32px);">
+  <span style="font-size:32px;">📱</span>
+  <div style="flex:1;">
+    <div style="font-family:'Fredoka One',cursive;font-size:15px;color:#fff;margin-bottom:2px;">Instalar no celular!</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.6);">Use sem internet, como um app</div>
+  </div>
+  <button id="install-btn" style="background:linear-gradient(135deg,#FF6B9D,#FFB347);color:#fff;font-family:'Fredoka One',cursive;font-size:13px;border:none;border-radius:50px;padding:8px 16px;cursor:pointer;white-space:nowrap;">Instalar ✨</button>
+  <button id="dismiss-install" style="background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:20px;padding:0;line-height:1;">×</button>
+</div>
+
+<!-- iOS INSTALL HINT -->
+<div id="ios-hint" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999;background:#1E1B3A;border:2px solid rgba(255,215,0,.4);border-radius:20px;padding:14px 18px;flex-direction:column;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,.5);max-width:300px;width:calc(100% - 32px);text-align:center;">
+  <div style="font-size:28px;">📲</div>
+  <div style="font-family:'Fredoka One',cursive;font-size:14px;color:#fff;">Para instalar no iPhone:</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;">Toque em <strong style="color:#FFD700;">Compartilhar</strong> (□↑) e depois em<br><strong style="color:#FFD700;">"Adicionar à Tela de Início"</strong></div>
+  <button onclick="document.getElementById('ios-hint').style.display='none'" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:50px;padding:6px 20px;cursor:pointer;font-size:13px;margin-top:4px;">Entendi</button>
+</div>
+
+<div id="bg"></div>
+
+<div class="scr on" id="s-cov">
+  <div class="cv-glow"></div>
+  <div class="cv-planet">🌍</div>
+  <h1 class="cv-title">Mundo Mágico<br>das Crianças</h1>
+  <p class="cv-sub">✨ 18 Fases Incríveis • Ligar • Memória • Piano • Labirinto • Pintar • História</p>
+  <div class="cv-badges">
+    <span class="bdg">🔤 Letras</span><span class="bdg">🔢 Números</span><span class="bdg">🎨 Cores</span><span class="bdg">🐾 Animais</span>
+    <span class="bdg">👨‍👩‍👧 Família</span><span class="bdg">🏠 Objetos</span><span class="bdg">😄 Emoções</span><span class="bdg">🌿 Natureza</span>
+    <span class="bdg">🩺 Profissões</span><span class="bdg">🔺 Formas</span><span class="bdg">⏰ Relógio</span><span class="bdg">🎵 Piano</span>
+    <span class="bdg">🃏 Memória</span><span class="bdg">🔢 Sequência</span><span class="bdg">🚗 Labirinto</span><span class="bdg">🎨 Pintar</span>
+    <span class="bdg">✍️ Palavras</span><span class="bdg">📖 História</span>
+  </div>
+  <div class="cv-animals"><span>🐱</span><span>🐶</span><span>🦁</span><span>🐸</span><span>🦋</span></div>
+  <button class="btn-start" onclick="goMap()">🚀 Começar a Aventura!</button>
+</div>
+
+<div class="scr" id="s-map">
+  <div class="mhdr">
+    <div class="mlogo">🌟 Mundo Mágico</div>
+    <div class="tstar">⭐ <span id="ts">0</span> / 54</div>
+  </div>
+  <div class="mttl">🗺️ Mapa das 18 Aventuras</div>
+  <div class="msub">Complete cada fase e ganhe até 3 estrelas! Desbloqueie todas!</div>
+  <div class="ppath" id="ppath"></div>
+</div>
+
+<div class="scr" id="s-act">
+  <div class="atop">
+    <button class="abk" onclick="goMap()">◀</button>
+    <div class="ainf"><div class="albl" id="albl">FASE 1</div><div class="attl" id="attl">...</div></div>
+    <div class="astr" id="astr">⬜⬜⬜</div>
+  </div>
+  <div class="apw"><div class="apf" id="apf" style="width:0%"></div></div>
+  <div class="abody" id="abody"></div>
+</div>
+
+<div class="scr" id="s-done">
+  <div class="ctro">🏆</div>
+  <div class="ctit">Fase Completa!</div>
+  <div class="cname" id="cname"></div>
+  <div class="cstars" id="cstars"></div>
+  <p class="cmsg" id="cmsg"></p>
+  <div class="cbtns">
+    <button class="btnext" id="bnnext">Próxima Fase ▶</button>
+    <button class="btsec" onclick="replayPhase()">🔄 Repetir</button>
+    <button class="btsec" onclick="goMap()">🗺️ Ver mapa</button>
+  </div>
+</div>
+
+<div class="scr" id="s-fin">
+  <div style="font-size:50px;margin-bottom:10px;">🎆🏆🎉🌟🎊</div>
+  <div class="fntit">VOCÊ ZEROU!<br>EXTRAORDINÁRIO! 🎊</div>
+  <p style="color:rgba(255,255,255,.52);font-size:12px;font-weight:700;margin:6px 0 18px;">Parabéns, Super Explorador Mágico!</p>
+  <div class="fndip">
+    <div style="font-family:'Fredoka One',cursive;font-size:16px;color:#FFD700;margin-bottom:5px;">🏅 Super Diploma Mágico</div>
+    <div style="font-family:'Fredoka One',cursive;font-size:26px;color:#fff;margin-bottom:2px;" id="fnst">⭐ 0</div>
+    <div style="color:rgba(255,255,255,.42);font-size:11px;font-weight:700;margin-bottom:12px;">estrelas coletadas de 54!</div>
+    <div style="font-size:22px;letter-spacing:3px;">🔤🔢🎨🐾👨‍👩‍👧🏠😄🌿🩺🔺⏰🎵🃏🔢🚗🎨✍️📖</div>
+  </div>
+  <button class="btnrst" onclick="restartAll()">🔄 Recomeçar!</button>
+</div>
+
+<div class="fbpop" id="fbpop"></div>
+
+<script>
+const NP=18;
+let ST=loadST(),curP=1,curSc=0,maxSc=0;
+function loadST(){try{const s=localStorage.getItem("mm5");if(s)return JSON.parse(s);}catch(e){}return{ul:1,stars:Array(NP).fill(0),tot:0};}
+function saveST(){try{localStorage.setItem("mm5",JSON.stringify(ST));}catch(e){}}
+function restartAll(){ST={ul:1,stars:Array(NP).fill(0),tot:0};saveST();goMap();}
+(()=>{const c=document.getElementById("bg");for(let i=0;i<50;i++){const el=document.createElement("div");el.className="bstar";const sz=1+Math.random()*3;el.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:${Math.random()*100}%;animation-duration:${6+Math.random()*12}s;animation-delay:${Math.random()*8}s;`;c.appendChild(el);}})();
+function show(id){document.querySelectorAll(".scr").forEach(s=>s.classList.remove("on"));document.getElementById(id).classList.add("on");window.scrollTo(0,0);}
+function goMap(){show("s-map");buildMap();}
+
+const PHASES=[
+  {id:1, em:"🔤",name:"Letra → Palavra",        act:"letterWord"},
+  {id:2, em:"🔢",name:"Número → Quantidade",    act:"numQty"},
+  {id:3, em:"🎨",name:"Cor → Nome",             act:"colorName"},
+  {id:4, em:"🐾",name:"Animal → Nome",          act:"animalName"},
+  {id:5, em:"👨‍👩‍👧",name:"Família → Quem é?",     act:"family"},
+  {id:6, em:"🏠",name:"Objeto → Onde Usa?",     act:"objPlace"},
+  {id:7, em:"😄",name:"Reconheça a Emoção",     act:"emotions"},
+  {id:8, em:"🌿",name:"Animal → Habitat",       act:"habitat"},
+  {id:9, em:"🩺",name:"Profissão → Ferramenta", act:"profission"},
+  {id:10,em:"🔺",name:"Formas Geométricas",     act:"shapes"},
+  {id:11,em:"⏰",name:"Relógio Interativo",     act:"clock"},
+  {id:12,em:"🎵",name:"Piano Mágico",           act:"piano"},
+  {id:13,em:"🃏",name:"Jogo da Memória",        act:"memory"},
+  {id:14,em:"🔢",name:"Padrões & Sequências",   act:"sequences"},
+  {id:15,em:"🍎",name:"Saudável ou Não?",       act:"foodSort"},
+  {id:16,em:"🚗",name:"Labirinto do Carrinho",  act:"maze"},
+  {id:17,em:"✍️", name:"Complete Palavras",      act:"wordComplete"},
+  {id:18,em:"📖",name:"A Grande Aventura",      act:"story"},
+];
+
+function buildMap(){
+  updTot();
+  const pp=document.getElementById("ppath");pp.innerHTML="";
+  PHASES.forEach((ph,i)=>{
+    if(i>0){const d=document.createElement("div");d.className="pconn";pp.appendChild(d);}
+    const row=document.createElement("div");row.className="prow";
+    const card=document.createElement("div");
+    const s=ST.stars[i],ul=ph.id<=ST.ul,dn=s>0,cur=ph.id===ST.ul&&!dn;
+    card.className="pcard"+(ul?" ul":" lk")+(dn?" dn":"")+(cur?" cur":"");
+    let sh="";for(let x=0;x<3;x++)sh+=x<s?"⭐":"☆";
+    let tc="tlk",tt="🔒 Bloqueada";
+    if(dn){tc="tdn";tt="✅ Concluída";}else if(cur){tc="tcur";tt="▶ Jogar agora!";}else if(ul){tc="tul";tt="🔓 Disponível";}
+    card.innerHTML=`<span class="pem">${ul?ph.em:"🔒"}</span><div class="pnum">Fase ${ph.id}</div><div class="pname">${ph.name}</div><div class="pstars">${sh}</div><span class="ptag ${tc}">${tt}</span>`;
+    if(ul)card.onclick=()=>startPhase(ph.id);
+    row.appendChild(card);pp.appendChild(row);
+  });
+}
+function updTot(){ST.tot=ST.stars.reduce((a,b)=>a+b,0);saveST();document.getElementById("ts").textContent=ST.tot;}
+
+function startPhase(id){
+  curP=id;curSc=0;maxSc=0;
+  const ph=PHASES[id-1];
+  document.getElementById("albl").textContent=`FASE ${ph.id} DE ${NP}`;
+  document.getElementById("attl").textContent=ph.name;
+  document.getElementById("astr").innerHTML="⬜⬜⬜";
+  document.getElementById("apf").style.width="0%";
+  show("s-act");
+  const body=document.getElementById("abody");body.innerHTML="";
+  const acts={letterWord:bLetterWord,numQty:bNumQty,colorName:bColorName,animalName:bAnimalName,
+    family:bFamily,objPlace:bObjPlace,emotions:bEmotions,habitat:bHabitat,profission:bProfission,
+    shapes:bShapes,clock:bClock,piano:bPiano,memory:bMemory,sequences:bSequences,
+    foodSort:bFoodSort,maze:bMaze,wordComplete:bWordComplete,story:bStory};
+  acts[ph.act](body);
+}
+function replayPhase(){startPhase(curP);}
+function setMax(n){maxSc=n;}
+function addPt(){curSc++;updStars();}
+function updStars(){
+  const p=maxSc>0?curSc/maxSc:0;const s=p>=1?3:p>=.6?2:p>=.3?1:0;
+  let h="";for(let i=0;i<3;i++)h+=i<s?"⭐":"⬜";
+  document.getElementById("astr").innerHTML=h;
+  document.getElementById("apf").style.width=(maxSc>0?Math.min(100,curSc/maxSc*100):0)+"%";
+}
+function showDoneBtn(){
+  let b=document.getElementById("_db");
+  if(!b){b=document.createElement("button");b.id="_db";b.className="btnd";b.innerHTML="✅ Concluir Fase!";b.onclick=concludePhase;document.getElementById("abody").appendChild(b);}
+  setTimeout(()=>b.classList.add("vis"),500);
+}
+function concludePhase(){
+  const p=maxSc>0?curSc/maxSc:1;const s=p>=1?3:p>=.6?2:1;
+  const i=curP-1;if(s>ST.stars[i])ST.stars[i]=s;
+  if(curP<NP&&curP>=ST.ul)ST.ul=curP+1;
+  updTot();saveST();showPhaseDone(s);
+}
+function showPhaseDone(stars){
+  const ph=PHASES[curP-1];
+  document.getElementById("cname").textContent=ph.em+" "+ph.name;
+  const row=document.getElementById("cstars");row.innerHTML="";
+  for(let i=0;i<3;i++){const s=document.createElement("span");s.className="cstar";s.textContent=i<stars?"⭐":"☆";s.style.fontSize=i<stars?"48px":"32px";row.appendChild(s);}
+  document.getElementById("cmsg").textContent=["Boa tentativa! Tente de novo!","Muito bem! Você está ótimo!","PERFEITO! Incrível! 🎉"][stars-1];
+  const last=curP===NP,bn=document.getElementById("bnnext");
+  if(last){bn.textContent="🏆 Ver Diploma!";bn.onclick=showFinal;}
+  else{bn.textContent=`Próxima: ${PHASES[curP].em} ${PHASES[curP].name} ▶`;bn.onclick=()=>startPhase(curP+1);}
+  show("s-done");confetti();
+}
+function showFinal(){document.getElementById("fnst").textContent="⭐ "+ST.tot+" / "+(NP*3);show("s-fin");confetti();confetti();}
+
+/* ═══ CONNECT ENGINE ═══ */
+function buildConnect(container,leftItems,rightItems,isMatch){
+  const total=leftItems.length;setMax(total);
+  container.innerHTML=`<div class="instr">✏️ Clique na <strong>esquerda</strong> depois no par correto da <strong>direita</strong>!</div>
+  <div class="sbar">Ligações: <span class="sv" id="csc">0</span> / ${total}</div>
+  <div class="cgwrap" id="cgw"><div class="cgcol cl" id="cgl"></div><svg class="cgsvg" id="cgsvg"></svg><div class="cgcol cr" id="cgr"></div></div>`;
+  const colL=document.getElementById("cgl"),colR=document.getElementById("cgr");
+  const svg=document.getElementById("cgsvg"),wrap=document.getElementById("cgw");
+  let matched=0,selL=null;const lines={};
+  leftItems.forEach(item=>{
+    const d=document.createElement("div");d.className="cgitem cl";d.id="L"+item.id;
+    d.innerHTML=`<div class="cgb">${item.html}</div><div class="cgdot" id="dL${item.id}"></div>`;
+    d.onclick=()=>clickL(item.id);colL.appendChild(d);
+  });
+  [...rightItems].sort(()=>Math.random()-.5).forEach(item=>{
+    const d=document.createElement("div");d.className="cgitem cr";d.id="R"+item.id;
+    d.innerHTML=`<div class="cgdot" id="dR${item.id}"></div><div class="cgb">${item.html}</div>`;
+    d.onclick=()=>clickR(item.id);colR.appendChild(d);
+  });
+  function clickL(id){
+    const el=document.getElementById("L"+id);if(el.classList.contains("mat"))return;
+    document.querySelectorAll("#cgl .cgitem").forEach(x=>x.classList.remove("sel"));
+    el.classList.add("sel");selL=id;
+  }
+  function clickR(id){
+    if(!selL){showFb("👈 Clique primeiro na esquerda!",false,1100);return;}
+    const rEl=document.getElementById("R"+id);if(rEl.classList.contains("mat"))return;
+    if(isMatch(selL,id)){
+      const lEl=document.getElementById("L"+selL);
+      lEl.classList.remove("sel");lEl.classList.add("mat");rEl.classList.add("mat");
+      drawLine(selL,id,"#2ECC71");matched++;addPt();document.getElementById("csc").textContent=matched;
+      showFb("🎉 Correto!",true);selL=null;
+      if(matched===total)setTimeout(()=>{showFb("🏆 Você ligou tudo!",true,2000);showDoneBtn();},400);
+    } else {
+      const lEl=document.getElementById("L"+selL);
+      lEl.classList.add("wrg");rEl.classList.add("wrg");
+      drawTmpLine(selL,id,"#E74C3C");showFb("❌ Tente de novo!",false);
+      setTimeout(()=>{lEl.classList.remove("wrg","sel");rEl.classList.remove("wrg");selL=null;},700);
+    }
+  }
+  function dPos(did){
+    const dot=document.getElementById(did);if(!dot)return{x:0,y:0};
+    const wr=wrap.getBoundingClientRect(),dr=dot.getBoundingClientRect();
+    return{x:dr.left+dr.width/2-wr.left,y:dr.top+dr.height/2-wr.top};
+  }
+  function mkLine(x1,y1,x2,y2,color,dash){
+    const l=document.createElementNS("http://www.w3.org/2000/svg","line");
+    l.setAttribute("x1",x1);l.setAttribute("y1",y1);l.setAttribute("x2",x2);l.setAttribute("y2",y2);
+    l.setAttribute("stroke",color);l.setAttribute("stroke-width","4");l.setAttribute("stroke-linecap","round");
+    if(dash)l.setAttribute("stroke-dasharray","7,5");svg.appendChild(l);return l;
+  }
+  function drawLine(lId,rId,color){
+    const p1=dPos("dL"+lId),p2=dPos("dR"+rId);
+    const l=mkLine(p1.x,p1.y,p2.x,p2.y,color,false);
+    l.style.opacity="0";setTimeout(()=>{l.style.transition="opacity .3s";l.style.opacity="1";},10);
+    lines[lId]={l,rId};
+  }
+  function drawTmpLine(lId,rId,color){
+    const p1=dPos("dL"+lId),p2=dPos("dR"+rId);
+    const l=mkLine(p1.x,p1.y,p2.x,p2.y,color,true);
+    setTimeout(()=>{if(l.parentNode)l.parentNode.removeChild(l);},900);
+  }
+  window.addEventListener("resize",()=>{Object.entries(lines).forEach(([lId,{l,rId}])=>{const p1=dPos("dL"+lId),p2=dPos("dR"+rId);l.setAttribute("x1",p1.x);l.setAttribute("y1",p1.y);l.setAttribute("x2",p2.x);l.setAttribute("y2",p2.y);});});
+}
+
+/* ═══ FASE 1 — LETRA → PALAVRA (B=Bola ✓) ═══ */
+const LW=[
+  {id:"A",lh:'<span class="bn" style="color:#FF6B9D;font-size:24px;">A</span><div class="bl">letra A</div>',rh:'<span class="be">🍍</span><div class="bl">Abacaxi</div>'},
+  {id:"B",lh:'<span class="bn" style="color:#3498DB;font-size:24px;">B</span><div class="bl">letra B</div>',rh:'<span class="be">🎈</span><div class="bl">Bola</div>'},
+  {id:"C",lh:'<span class="bn" style="color:#2ECC71;font-size:24px;">C</span><div class="bl">letra C</div>',rh:'<span class="be">🏠</span><div class="bl">Casa</div>'},
+  {id:"D",lh:'<span class="bn" style="color:#E74C3C;font-size:24px;">D</span><div class="bl">letra D</div>',rh:'<span class="be">🦷</span><div class="bl">Dente</div>'},
+  {id:"E",lh:'<span class="bn" style="color:#E67E22;font-size:24px;">E</span><div class="bl">letra E</div>',rh:'<span class="be">⭐</span><div class="bl">Estrela</div>'},
+  {id:"F",lh:'<span class="bn" style="color:#9B59B6;font-size:24px;">F</span><div class="bl">letra F</div>',rh:'<span class="be">🌺</span><div class="bl">Flor</div>'},
+  {id:"G",lh:'<span class="bn" style="color:#1ABC9C;font-size:24px;">G</span><div class="bl">letra G</div>',rh:'<span class="be">🐱</span><div class="bl">Gato</div>'},
+  {id:"L",lh:'<span class="bn" style="color:#E74C3C;font-size:24px;">L</span><div class="bl">letra L</div>',rh:'<span class="be">🦁</span><div class="bl">Leão</div>'},
+];
+function bLetterWord(c){buildConnect(c,LW.map(d=>({id:d.id,html:d.lh})),LW.map(d=>({id:d.id,html:d.rh})),(l,r)=>l===r);}
+
+/* ═══ FASE 2 — NÚMERO → QUANTIDADE ═══ */
+const NQ=[
+  {id:"1",nh:'<span class="bn" style="color:#2E86DE;font-size:26px;">1</span><div class="bl">um</div>',dh:'<span style="font-size:20px;">🟡</span><div class="bl">1 bolinha</div>'},
+  {id:"2",nh:'<span class="bn" style="color:#2E86DE;font-size:26px;">2</span><div class="bl">dois</div>',dh:'<span style="font-size:17px;">🟡🟡</span><div class="bl">2 bolinhas</div>'},
+  {id:"3",nh:'<span class="bn" style="color:#2E86DE;font-size:26px;">3</span><div class="bl">três</div>',dh:'<span style="font-size:15px;">🟡🟡🟡</span><div class="bl">3 bolinhas</div>'},
+  {id:"4",nh:'<span class="bn" style="color:#2E86DE;font-size:26px;">4</span><div class="bl">quatro</div>',dh:'<span style="font-size:13px;">🟡🟡🟡🟡</span><div class="bl">4 bolinhas</div>'},
+  {id:"5",nh:'<span class="bn" style="color:#2E86DE;font-size:26px;">5</span><div class="bl">cinco</div>',dh:'<span style="font-size:12px;">🟡🟡🟡🟡🟡</span><div class="bl">5 bolinhas</div>'},
+  {id:"6",nh:'<span class="bn" style="color:#2E86DE;font-size:26px;">6</span><div class="bl">seis</div>',dh:'<span style="font-size:11px;">🟡🟡🟡🟡🟡🟡</span><div class="bl">6 bolinhas</div>'},
+  {id:"7",nh:'<span class="bn" style="color:#2E86DE;font-size:26px;">7</span><div class="bl">sete</div>',dh:'<span style="font-size:10px;">🟡🟡🟡🟡🟡🟡🟡</span><div class="bl">7 bolinhas</div>'},
+];
+function bNumQty(c){buildConnect(c,NQ.map(d=>({id:d.id,html:d.nh})),NQ.map(d=>({id:d.id,html:d.dh})),(l,r)=>l===r);}
+
+/* ═══ FASE 3 — COR → NOME ═══ */
+const CORES=[
+  {id:"verm",ch:'<div style="width:38px;height:38px;border-radius:50%;background:#E74C3C;margin:0 auto 2px;"></div><div class="bl">?</div>',nh:'<span class="bn" style="color:#E74C3C;">Vermelho</span>'},
+  {id:"azul",ch:'<div style="width:38px;height:38px;border-radius:50%;background:#3498DB;margin:0 auto 2px;"></div><div class="bl">?</div>',nh:'<span class="bn" style="color:#3498DB;">Azul</span>'},
+  {id:"amar",ch:'<div style="width:38px;height:38px;border-radius:50%;background:#F1C40F;margin:0 auto 2px;"></div><div class="bl">?</div>',nh:'<span class="bn" style="color:#B8960C;">Amarelo</span>'},
+  {id:"verd",ch:'<div style="width:38px;height:38px;border-radius:50%;background:#2ECC71;margin:0 auto 2px;"></div><div class="bl">?</div>',nh:'<span class="bn" style="color:#2ECC71;">Verde</span>'},
+  {id:"lara",ch:'<div style="width:38px;height:38px;border-radius:50%;background:#E67E22;margin:0 auto 2px;"></div><div class="bl">?</div>',nh:'<span class="bn" style="color:#E67E22;">Laranja</span>'},
+  {id:"roxo",ch:'<div style="width:38px;height:38px;border-radius:50%;background:#9B59B6;margin:0 auto 2px;"></div><div class="bl">?</div>',nh:'<span class="bn" style="color:#9B59B6;">Roxo</span>'},
+  {id:"rosa",ch:'<div style="width:38px;height:38px;border-radius:50%;background:#E91E63;margin:0 auto 2px;"></div><div class="bl">?</div>',nh:'<span class="bn" style="color:#C4165A;">Rosa</span>'},
+];
+function bColorName(c){buildConnect(c,CORES.map(d=>({id:d.id,html:d.ch})),CORES.map(d=>({id:d.id,html:d.nh})),(l,r)=>l===r);}
+
+/* ═══ FASE 4 — ANIMAL → NOME ═══ */
+const ANIM=[
+  {id:"cach",eh:'<span class="be">🐶</span>',nh:'<span class="bn" style="color:#E67E22;">Cachorro</span>'},
+  {id:"gato",eh:'<span class="be">🐱</span>',nh:'<span class="bn" style="color:#FF6B9D;">Gato</span>'},
+  {id:"elef",eh:'<span class="be">🐘</span>',nh:'<span class="bn" style="color:#9B59B6;">Elefante</span>'},
+  {id:"leao",eh:'<span class="be">🦁</span>',nh:'<span class="bn" style="color:#E67E22;">Leão</span>'},
+  {id:"borb",eh:'<span class="be">🦋</span>',nh:'<span class="bn" style="color:#3498DB;">Borboleta</span>'},
+  {id:"sapo",eh:'<span class="be">🐸</span>',nh:'<span class="bn" style="color:#2ECC71;">Sapo</span>'},
+  {id:"peix",eh:'<span class="be">🐟</span>',nh:'<span class="bn" style="color:#1ABC9C;">Peixe</span>'},
+  {id:"coel",eh:'<span class="be">🐰</span>',nh:'<span class="bn" style="color:#E74C3C;">Coelho</span>'},
+];
+function bAnimalName(c){buildConnect(c,ANIM.map(d=>({id:d.id,html:d.eh})),ANIM.map(d=>({id:d.id,html:d.nh})),(l,r)=>l===r);}
+
+/* ═══ FASE 5 — FAMÍLIA ═══ */
+const FAM=[
+  {id:"pai",  eh:'<span class="be">👨</span><div class="bl">quem é?</div>',nh:'<span class="bn" style="color:#3498DB;">Pai</span>'},
+  {id:"mae",  eh:'<span class="be">👩</span><div class="bl">quem é?</div>',nh:'<span class="bn" style="color:#E91E63;">Mãe</span>'},
+  {id:"filho",eh:'<span class="be">👦</span><div class="bl">quem é?</div>',nh:'<span class="bn" style="color:#2ECC71;">Filho</span>'},
+  {id:"filha",eh:'<span class="be">👧</span><div class="bl">quem é?</div>',nh:'<span class="bn" style="color:#FF6B9D;">Filha</span>'},
+  {id:"avo",  eh:'<span class="be">👴</span><div class="bl">quem é?</div>',nh:'<span class="bn" style="color:#E67E22;">Avô</span>'},
+  {id:"avo2", eh:'<span class="be">👵</span><div class="bl">quem é?</div>',nh:'<span class="bn" style="color:#9B59B6;">Avó</span>'},
+  {id:"bebe", eh:'<span class="be">👶</span><div class="bl">quem é?</div>',nh:'<span class="bn" style="color:#1ABC9C;">Bebê</span>'},
+];
+function bFamily(c){buildConnect(c,FAM.map(d=>({id:d.id,html:d.eh})),FAM.map(d=>({id:d.id,html:d.nh})),(l,r)=>l===r);}
+
+/* ═══ FASE 6 — OBJETO → LUGAR ═══ */
+const OBJ=[
+  {id:"garfo",oh:'<span class="be">🍴</span><div class="bl">garfo</div>',ph:'<span class="be">🍽️</span><div class="bl">Cozinha</div>'},
+  {id:"bola", oh:'<span class="be">⚽</span><div class="bl">bola</div>',ph:'<span class="be">🌿</span><div class="bl">Parque</div>'},
+  {id:"livro",oh:'<span class="be">📚</span><div class="bl">livro</div>',ph:'<span class="be">🏫</span><div class="bl">Escola</div>'},
+  {id:"sabao",oh:'<span class="be">🧼</span><div class="bl">sabão</div>',ph:'<span class="be">🚿</span><div class="bl">Banheiro</div>'},
+  {id:"carro",oh:'<span class="be">🚗</span><div class="bl">carro</div>',ph:'<span class="be">🛣️</span><div class="bl">Rua</div>'},
+  {id:"cama", oh:'<span class="be">🛏️</span><div class="bl">cama</div>',ph:'<span class="be">🌙</span><div class="bl">Quarto</div>'},
+];
+function bObjPlace(c){buildConnect(c,OBJ.map(d=>({id:d.id,html:d.oh})),OBJ.map(d=>({id:d.id,html:d.ph})),(l,r)=>l===r);}
+
+/* ═══ FASE 7 — EMOÇÕES ═══ */
+/* ── EMOS: name === opts[0] sempre (resposta correta é sempre name) ── */
+const EMOS=[
+  {eh:"😄",name:"Feliz",    opts:["Feliz","Triste","Com raiva","Com medo"]},
+  {eh:"😢",name:"Triste",   opts:["Triste","Feliz","Surpreso","Animado"]},
+  {eh:"😠",name:"Com raiva",opts:["Com raiva","Triste","Assustado","Animado"]},
+  {eh:"😨",name:"Com medo", opts:["Com medo","Feliz","Com raiva","Surpreso"]},
+  {eh:"😲",name:"Surpreso", opts:["Surpreso","Triste","Com medo","Feliz"]},
+  {eh:"🤩",name:"Animado",  opts:["Animado","Triste","Com raiva","Com medo"]},
+];
+/* Mostra uma emoção por vez — mais claro para crianças de 5 anos */
+function bEmotions(c){
+  const total=EMOS.length;
+  setMax(total);
+  let idx=0, sc=0;
+
+  c.innerHTML=`
+    <div class="instr">😄 Veja a carinha e clique no nome certo!</div>
+    <div class="sbar">Acertos: <span class="sv" id="esc">0</span> / ${total} &nbsp;|&nbsp; <span style="color:#aaa;font-size:11px;" id="eprog">1 de ${total}</span></div>
+    <div id="emo-box" style="background:#fff;border-radius:20px;border:3px solid #eee;padding:28px 20px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.07);">
+      <div id="emo-face" style="font-size:72px;margin-bottom:12px;line-height:1;"></div>
+      <div style="font-family:'Fredoka One',cursive;font-size:15px;color:#aaa;margin-bottom:18px;">Que emoção é essa?</div>
+      <div id="emo-opts" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:320px;margin:0 auto;"></div>
+      <div id="emo-result" style="font-family:'Fredoka One',cursive;font-size:20px;margin-top:16px;min-height:28px;"></div>
+    </div>`;
+
+  function renderEmo(){
+    if(idx>=total){setTimeout(()=>showDoneBtn(),500);return;}
+    const q=EMOS[idx];
+    document.getElementById("emo-face").textContent=q.eh;
+    document.getElementById("eprog").textContent=`${idx+1} de ${total}`;
+    document.getElementById("emo-result").textContent="";
+    const optsDiv=document.getElementById("emo-opts");
+    optsDiv.innerHTML="";
+    /* embaralha as opções */
+    [...q.opts].sort(()=>Math.random()-.5).forEach(opt=>{
+      const btn=document.createElement("button");
+      btn.textContent=opt;
+      btn.style.cssText="background:#F2EEFF;border:3px solid #ddd6ff;border-radius:14px;padding:12px 8px;font-family:'Fredoka One',cursive;font-size:15px;color:#5B3FA0;cursor:pointer;transition:all .18s;width:100%;";
+      btn.onmouseenter=()=>{if(!btn.disabled)btn.style.background="#ddd6ff";};
+      btn.onmouseleave=()=>{if(!btn.disabled)btn.style.background="#F2EEFF";};
+      btn.onclick=()=>{
+        /* desabilita todos imediatamente */
+        optsDiv.querySelectorAll("button").forEach(b=>b.disabled=true);
+        if(opt===q.name){
+          btn.style.background="#2ECC71";btn.style.borderColor="#2ECC71";btn.style.color="#fff";
+          document.getElementById("emo-result").innerHTML=`✅ Isso mesmo! É <strong>${q.name}</strong>!`;
+          sc++;document.getElementById("esc").textContent=sc;addPt();
+          setTimeout(()=>{idx++;renderEmo();},1100);
+        } else {
+          btn.style.background="#E74C3C";btn.style.borderColor="#E74C3C";btn.style.color="#fff";
+          /* mostra a correta em verde */
+          optsDiv.querySelectorAll("button").forEach(b=>{
+            if(b.textContent===q.name){b.style.background="#2ECC71";b.style.borderColor="#2ECC71";b.style.color="#fff";}
+          });
+          document.getElementById("emo-result").innerHTML=`❌ Era <strong>${q.name}</strong>! Tente a próxima!`;
+          setTimeout(()=>{idx++;renderEmo();},1400);
+        }
+      };
+      optsDiv.appendChild(btn);
+    });
+  }
+  renderEmo();
+}
+
+/* ═══ FASE 8 — ANIMAL → HABITAT ═══ */
+const HAB=[
+  {id:"peix2",eh:'<span class="be">🐟</span><div class="bl">peixe</div>',hh:'<span class="be">🌊</span><div class="bl">Mar/Rio</div>'},
+  {id:"leao2",eh:'<span class="be">🦁</span><div class="bl">leão</div>',hh:'<span class="be">🌾</span><div class="bl">Savana</div>'},
+  {id:"peng", eh:'<span class="be">🐧</span><div class="bl">pinguim</div>',hh:'<span class="be">❄️</span><div class="bl">Polo</div>'},
+  {id:"urso", eh:'<span class="be">🐻</span><div class="bl">urso</div>',hh:'<span class="be">🌲</span><div class="bl">Floresta</div>'},
+  {id:"came", eh:'<span class="be">🐪</span><div class="bl">camelo</div>',hh:'<span class="be">🏜️</span><div class="bl">Deserto</div>'},
+  {id:"rana",  eh:'<span class="be">🐸</span><div class="bl">sapo</div>',hh:'<span class="be">🌿</span><div class="bl">Lago</div>'},
+];
+function bHabitat(c){buildConnect(c,HAB.map(d=>({id:d.id,html:d.eh})),HAB.map(d=>({id:d.id,html:d.hh})),(l,r)=>l===r);}
+
+/* ═══ FASE 9 — PROFISSÃO → FERRAMENTA ═══ */
+const PROF=[
+  {id:"med",ph:'<span class="be">👨‍⚕️</span><div class="bl">médico</div>',fh:'<span class="be">🩺</span><div class="bl">estetoscópio</div>'},
+  {id:"bom",ph:'<span class="be">👨‍🚒</span><div class="bl">bombeiro</div>',fh:'<span class="be">🚒</span><div class="bl">caminhão</div>'},
+  {id:"pro",ph:'<span class="be">👩‍🏫</span><div class="bl">professora</div>',fh:'<span class="be">📝</span><div class="bl">caderno</div>'},
+  {id:"coz",ph:'<span class="be">👨‍🍳</span><div class="bl">cozinheiro</div>',fh:'<span class="be">🍳</span><div class="bl">frigideira</div>'},
+  {id:"pol",ph:'<span class="be">👮</span><div class="bl">policial</div>',fh:'<span class="be">🚔</span><div class="bl">viatura</div>'},
+  {id:"mus",ph:'<span class="be">👩‍🎤</span><div class="bl">músico</div>',fh:'<span class="be">🎸</span><div class="bl">guitarra</div>'},
+];
+function bProfission(c){buildConnect(c,PROF.map(d=>({id:d.id,html:d.ph})),PROF.map(d=>({id:d.id,html:d.fh})),(l,r)=>l===r);}
+
+/* ═══ FASE 10 — FORMAS GEOMÉTRICAS ═══ */
+const SHAPES_DATA=[
+  {id:"circ",svg:'<svg width="44" height="44"><circle cx="22" cy="22" r="18" fill="#FF6B9D"/></svg>',name:"Círculo"},
+  {id:"tria",svg:'<svg width="44" height="44"><polygon points="22,4 42,40 2,40" fill="#FFB347"/></svg>',name:"Triângulo"},
+  {id:"quad",svg:'<svg width="44" height="44"><rect x="4" y="4" width="36" height="36" fill="#7BC8F6"/></svg>',name:"Quadrado"},
+  {id:"ret", svg:'<svg width="54" height="34"><rect x="2" y="2" width="50" height="30" fill="#2ECC71"/></svg>',name:"Retângulo"},
+  {id:"los", svg:'<svg width="44" height="44"><polygon points="22,2 42,22 22,42 2,22" fill="#9B59B6"/></svg>',name:"Losango"},
+  {id:"est", svg:'<svg width="44" height="44"><polygon points="22,2 27,17 43,17 30,27 35,42 22,33 9,42 14,27 1,17 17,17" fill="#FFD700"/></svg>',name:"Estrela"},
+];
+function bShapes(c){
+  setMax(SHAPES_DATA.length);let sc=0;
+  c.innerHTML=`<div class="instr">🔺 Clique na forma e depois no nome correto!</div>
+  <div class="sbar">Acertos: <span class="sv" id="shsc">0</span> / ${SHAPES_DATA.length}</div>
+  <div style="margin-bottom:12px;"><strong style="font-family:'Fredoka One',cursive;font-size:14px;color:#888;">Formas:</strong></div>
+  <div class="shapes-grid" id="shg"></div>
+  <div style="margin-top:14px;"><strong style="font-family:'Fredoka One',cursive;font-size:14px;color:#888;">Nomes:</strong></div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px;" id="shnames"></div>`;
+  let selShape=null;
+  const g=document.getElementById("shg"),ng=document.getElementById("shnames");
+  const shuffled=[...SHAPES_DATA].sort(()=>Math.random()-.5);
+  SHAPES_DATA.forEach(({id,svg,name})=>{
+    const card=document.createElement("div");card.className="shape-card";card.id="sh"+id;card.dataset.id=id;
+    card.innerHTML=svg+`<div style="font-size:11px;color:#aaa;font-weight:800;margin-top:4px;">?</div>`;
+    card.onclick=()=>{
+      if(card.classList.contains("ok"))return;
+      document.querySelectorAll(".shape-card").forEach(x=>x.classList.remove("sel"));
+      card.classList.add("sel");selShape=id;
+    };
+    g.appendChild(card);
+  });
+  shuffled.forEach(({id,name})=>{
+    const btn=document.createElement("button");btn.className="wopt";btn.style.cssText="width:auto;padding:6px 12px;font-size:13px;height:auto;";btn.textContent=name;btn.id="shn"+id;
+    btn.onclick=()=>{
+      if(!selShape){showFb("👆 Clique numa forma primeiro!",false,1100);return;}
+      const shCard=document.getElementById("sh"+selShape);
+      if(selShape===id){
+        shCard.classList.remove("sel");shCard.classList.add("ok");
+        shCard.querySelector("div").textContent=name;btn.classList.add("ok");btn.disabled=true;
+        sc++;document.getElementById("shsc").textContent=sc;addPt();showFb("🎉 "+name+"!",true);selShape=null;
+        if(sc===SHAPES_DATA.length)setTimeout(()=>showDoneBtn(),600);
+      } else {
+        shCard.classList.add("err");btn.classList.add("err");
+        setTimeout(()=>{shCard.classList.remove("err","sel");btn.classList.remove("err");selShape=null;},700);
+        showFb("❌ Tente de novo!",false);
+      }
+    };
+    ng.appendChild(btn);
+  });
+}
+
+/* ═══ FASE 11 — RELÓGIO ═══ */
+const CLOCK_QS=[
+  {h:3,m:0,label:"3:00",opts:["3:00","6:00","9:00","12:00"]},
+  {h:6,m:0,label:"6:00",opts:["3:00","6:00","9:00","12:00"]},
+  {h:9,m:0,label:"9:00",opts:["9:00","6:00","3:00","12:00"]},
+  {h:12,m:0,label:"12:00",opts:["12:00","9:00","6:00","3:00"]},
+  {h:1,m:30,label:"1:30",opts:["1:30","2:30","3:30","12:30"]},
+  {h:7,m:0,label:"7:00",opts:["7:00","5:00","8:00","4:00"]},
+];
+let clockIdx=0,clockScore=0;
+function bClock(c){
+  clockIdx=0;clockScore=0;setMax(CLOCK_QS.length);
+  c.innerHTML=`<div class="instr">⏰ Que horas são? Clique na resposta certa!</div>
+  <div class="sbar">Acertos: <span class="sv" id="clsc">0</span> / ${CLOCK_QS.length}</div>
+  <div class="clock-wrap" id="clwrap"></div>`;
+  renderClock(c);
+}
+function renderClock(c){
+  if(clockIdx>=CLOCK_QS.length){setTimeout(()=>showDoneBtn(),400);return;}
+  const q=CLOCK_QS[clockIdx];
+  const wrap=document.getElementById("clwrap");
+  const hDeg=(q.h%12+q.m/60)*30,mDeg=q.m*6;
+  const hx=50+28*Math.sin(hDeg*Math.PI/180),hy=50-28*Math.cos(hDeg*Math.PI/180);
+  const mx=50+38*Math.sin(mDeg*Math.PI/180),my=50-38*Math.cos(mDeg*Math.PI/180);
+  const ticks=Array.from({length:12},(_,i)=>{const a=i*30,x1=50+40*Math.sin(a*Math.PI/180),y1=50-40*Math.cos(a*Math.PI/180),x2=50+44*Math.sin(a*Math.PI/180),y2=50-44*Math.cos(a*Math.PI/180);return`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#ccc" stroke-width="2"/>`;}).join("");
+  wrap.innerHTML=`
+    <svg class="clock-svg" width="120" height="120" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="48" fill="#fff" stroke="#e0e0e0" stroke-width="2"/>
+      ${ticks}
+      <line x1="50" y1="50" x2="${hx}" y2="${hy}" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+      <line x1="50" y1="50" x2="${mx}" y2="${my}" stroke="#FF6B9D" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="50" cy="50" r="3" fill="#333"/>
+    </svg>
+    <div class="clock-question">Que horas são?</div>
+    <div class="clock-opts" id="clopts"></div>`;
+  const opts=[...q.opts].sort(()=>Math.random()-.5);
+  opts.forEach(opt=>{
+    const btn=document.createElement("button");btn.className="clock-opt";btn.textContent=opt;
+    btn.onclick=()=>{
+      if(opt===q.label){
+        btn.classList.add("ok");clockScore++;document.getElementById("clsc").textContent=clockScore;
+        addPt();showFb("🎉 "+opt+"!",true);
+        setTimeout(()=>{clockIdx++;if(document.getElementById("clwrap"))renderClock(c);},900);
+      } else {
+        btn.classList.add("err");setTimeout(()=>btn.classList.remove("err"),600);showFb("Tente de novo!",false);
+      }
+    };
+    document.getElementById("clopts").appendChild(btn);
+  });
+}
+
+/* ═══ FASE 12 — PIANO ═══ */
+const NOTES=["Dó","Ré","Mi","Fá","Sol","Lá","Si","Dó2"];
+const FREQS=[261,294,330,349,392,440,494,523];
+const NOTE_COLORS=["#FF6B9D","#FFB347","#FFD700","#2ECC71","#7BC8F6","#9B59B6","#E74C3C","#1ABC9C"];
+const SONGS=[
+  {name:"🎵 Parabéns",notes:[0,0,1,0,3,2,0,0,1,0,4,3]},
+  {name:"🌟 Brilha Estrelinha",notes:[0,0,4,4,5,5,4,3,3,2,2,1,1,0]},
+  {name:"🎶 Incy Wincy",notes:[0,2,4,4,4,3,2,4,3,2,1,0]},
+];
+let audioCtx=null,pianoPlaying=false;
+function playNote(freq,duration=0.4){
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.frequency.value=freq;osc.type="sine";
+  gain.gain.setValueAtTime(.4,audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);
+  osc.start();osc.stop(audioCtx.currentTime+duration);
+}
+function bPiano(c){
+  setMax(1);
+  c.innerHTML=`<div class="instr">🎵 Toque as teclas ou clique em uma música para tocar!</div>
+  <div class="piano-wrap">
+    <div class="piano-keys" id="pkeys"></div>
+    <div style="text-align:center;font-family:'Fredoka One',cursive;font-size:13px;color:rgba(255,255,255,.5);margin-bottom:8px;">Toque uma música:</div>
+    <div class="piano-songs" id="psongs"></div>
+  </div>
+  <div style="text-align:center;margin-top:12px;font-family:'Fredoka One',cursive;font-size:14px;color:#aaa;" id="piano-hint">Toque pelo menos 5 notas para completar! 🎵</div>`;
+  const keys=document.getElementById("pkeys");
+  let notesPlayed=0;
+  NOTES.forEach((note,i)=>{
+    const k=document.createElement("div");k.className="pkey-w";k.style.background=NOTE_COLORS[i]+"33";k.textContent=note;
+    const play=()=>{
+      playNote(FREQS[i]);k.classList.add("playing");setTimeout(()=>k.classList.remove("playing"),300);
+      notesPlayed++;if(notesPlayed===5){addPt();showFb("🎵 Você é músico!",true);showDoneBtn();}
+      if(notesPlayed<=5)document.getElementById("piano-hint").textContent=`${notesPlayed}/5 notas tocadas! 🎵`;
+    };
+    k.onclick=play;k.addEventListener("touchstart",e=>{e.preventDefault();play();});
+    keys.appendChild(k);
+  });
+  const songs=document.getElementById("psongs");
+  SONGS.forEach(song=>{
+    const btn=document.createElement("button");btn.className="psong-btn";btn.textContent=song.name;
+    btn.onclick=async()=>{
+      if(pianoPlaying)return;pianoPlaying=true;
+      for(let n of song.notes){playNote(FREQS[n],0.35);await new Promise(r=>setTimeout(r,400));}
+      pianoPlaying=false;notesPlayed+=5;addPt();showFb("🎵 Que bonito!",true);showDoneBtn();
+    };
+    songs.appendChild(btn);
+  });
+}
+
+/* ═══ FASE 13 — JOGO DA MEMÓRIA ═══ */
+const MEM_EMOJIS=["🐱","🐶","🐸","🦁","🦋","🐘","🐟","🌺","⭐","🍎","🎈","🏠"];
+function bMemory(c){
+  const pairs=[...MEM_EMOJIS.slice(0,8),...MEM_EMOJIS.slice(0,8)].sort(()=>Math.random()-.5);
+  setMax(8);let flipped=[],matched=0,canClick=true;
+  c.innerHTML=`<div class="instr">🃏 Clique para virar as cartas e encontre os pares iguais!</div>
+  <div class="sbar">Pares: <span class="sv" id="msc">0</span> / 8</div>
+  <div class="mem-grid" id="mgrid" style="grid-template-columns:repeat(4,1fr);max-width:340px;margin:0 auto;"></div>`;
+  const g=document.getElementById("mgrid");
+  pairs.forEach((em,i)=>{
+    const card=document.createElement("div");card.className="mem-card back";card.dataset.em=em;card.dataset.idx=i;
+    card.innerHTML=`<span>${em}</span>`;
+    card.onclick=()=>{
+      if(!canClick||card.classList.contains("flipped")||card.classList.contains("matched"))return;
+      card.classList.remove("back");card.classList.add("flipped");
+      flipped.push(card);
+      if(flipped.length===2){
+        canClick=false;
+        if(flipped[0].dataset.em===flipped[1].dataset.em){
+          flipped.forEach(f=>f.classList.add("matched"));
+          matched++;document.getElementById("msc").textContent=matched;addPt();
+          showFb("🎉 Par encontrado!",true);flipped=[];canClick=true;
+          if(matched===8)setTimeout(()=>showDoneBtn(),500);
+        } else {
+          setTimeout(()=>{flipped.forEach(f=>{f.classList.remove("flipped");f.classList.add("back");});flipped=[];canClick=true;},1000);
+        }
+      }
+    };
+    g.appendChild(card);
+  });
+}
+
+/* ═══ FASE 14 — PADRÕES E SEQUÊNCIAS ═══ */
+const SEQS=[
+  {seq:["🔴","🔵","🔴","🔵","❓"],ans:"🔴",opts:["🔴","🔵","🟡","🟢"]},
+  {seq:["🐱","🐶","🐱","🐶","❓"],ans:"🐱",opts:["🐱","🐶","🐸","🐰"]},
+  {seq:["⭐","⭐","🌙","⭐","⭐","❓"],ans:"🌙",opts:["⭐","🌙","☀️","🌟"]},
+  {seq:["🍎","🍊","🍋","🍎","🍊","❓"],ans:"🍋",opts:["🍎","🍊","🍋","🍇"]},
+  {seq:["1️⃣","2️⃣","3️⃣","4️⃣","❓"],ans:"5️⃣",opts:["5️⃣","6️⃣","4️⃣","3️⃣"]},
+  {seq:["🔺","🔺","🔷","🔺","🔺","❓"],ans:"🔷",opts:["🔺","🔷","🔸","⭐"]},
+];
+let seqIdx=0,seqSc=0;
+function bSequences(c){
+  seqIdx=0;seqSc=0;setMax(SEQS.length);
+  c.innerHTML=`<div class="instr">🔢 O que vem a seguir? Complete o padrão!</div>
+  <div class="sbar">Acertos: <span class="sv" id="sqsc">0</span> / ${SEQS.length}</div>
+  <div class="seq-wrap" id="sqwrap"></div>`;
+  renderSeq();
+}
+function renderSeq(){
+  const wrap=document.getElementById("sqwrap");if(!wrap)return;
+  if(seqIdx>=SEQS.length){setTimeout(()=>showDoneBtn(),400);return;}
+  const q=SEQS[seqIdx];
+  const seqHTML=q.seq.map(s=>s==="❓"?`<div class="seq-blank">?</div>`:`<div class="seq-item">${s}</div>`).join("");
+  const optsHTML=[...q.opts].sort(()=>Math.random()-.5).map(o=>`<div class="seq-opt" data-v="${o}">${o}</div>`).join("");
+  wrap.innerHTML=`<p style="font-family:'Fredoka One',cursive;font-size:13px;color:#aaa;margin-bottom:8px;">Sequência ${seqIdx+1} de ${SEQS.length}:</p>
+  <div class="seq-row">${seqHTML}</div>
+  <hr style="border:none;border-top:2px dashed #eee;margin:12px 0;">
+  <p style="font-family:'Fredoka One',cursive;font-size:12px;color:#aaa;margin-bottom:8px;">Escolha:</p>
+  <div class="seq-opts">${optsHTML}</div>`;
+  wrap.querySelectorAll(".seq-opt").forEach(opt=>{
+    opt.onclick=()=>{
+      if(opt.dataset.v===q.ans){
+        wrap.querySelector(".seq-blank").textContent=q.ans;opt.classList.add("ok"||"");
+        seqSc++;document.getElementById("sqsc").textContent=seqSc;addPt();showFb("🎉 Correto!",true);
+        setTimeout(()=>{seqIdx++;renderSeq();},800);
+      } else {
+        opt.style.animation="shake .4s";setTimeout(()=>opt.style.animation="",500);showFb("❌ Tente de novo!",false);
+      }
+    };
+  });
+}
+
+/* ═══ FASE 15 — SAUDÁVEL OU NÃO? ═══ */
+const FOODS={
+  saud:["🍎","🥦","🥕","🍇","🍓","🥑","🍌","🥝"],
+  nao: ["🍕","🍟","🍦","🍭","🎂","🥤","🍩","🍫"]
+};
+function bFoodSort(c){
+  const all=[...FOODS.saud.map(f=>({e:f,ok:true})),...FOODS.nao.map(f=>({e:f,ok:false}))].sort(()=>Math.random()-.5);
+  setMax(all.length);let sc=0;
+  c.innerHTML=`<div class="instr">🍎 Clique no alimento e depois na caixa certa: Saudável ou Não Saudável?</div>
+  <div class="sbar">Acertos: <span class="sv" id="fsc">0</span> / ${all.length}</div>
+  <div class="sort-wrap">
+    <div class="sort-buckets">
+      <div class="sort-bucket" id="bk-saud">
+        <div class="sort-bucket-title">✅ Saudável</div>
+        <div class="sort-items-placed" id="pl-saud"></div>
+      </div>
+      <div class="sort-bucket" id="bk-nao">
+        <div class="sort-bucket-title">❌ Não Saudável</div>
+        <div class="sort-items-placed" id="pl-nao"></div>
+      </div>
+    </div>
+    <div class="sort-items" id="sitems"></div>
+  </div>`;
+  let selFood=null;
+  const items=document.getElementById("sitems");
+  all.forEach(({e,ok})=>{
+    const el=document.createElement("div");el.className="sort-item";el.textContent=e;el.dataset.ok=ok;
+    el.onclick=()=>{
+      document.querySelectorAll(".sort-item").forEach(x=>x.style.border="2px solid #eee");
+      el.style.border="3px solid #FF6B9D";selFood={e,ok,el};
+    };
+    items.appendChild(el);
+  });
+  ["saud","nao"].forEach(type=>{
+    document.getElementById("bk-"+type).onclick=()=>{
+      if(!selFood)return;
+      const correct=(type==="saud"&&selFood.ok)||(type==="nao"&&!selFood.ok);
+      if(correct){
+        const placed=document.getElementById("pl-"+type);
+        const p=document.createElement("span");p.textContent=selFood.e;p.style.fontSize="22px";placed.appendChild(p);
+        selFood.el.classList.add("used");sc++;document.getElementById("fsc").textContent=sc;addPt();
+        showFb("🎉 Isso mesmo!",true);selFood=null;
+        if(sc===all.length)setTimeout(()=>showDoneBtn(),500);
+      } else {
+        showFb("❌ Tente na outra caixa!",false);selFood.el.style.border="2px solid #eee";selFood=null;
+      }
+    };
+  });
+}
+
+/* ═══ FASE 16 — LABIRINTO ═══ */
+function bMaze(c){
+  setMax(1);
+  c.innerHTML=`<div class="instr">🚗 Use os botões (ou setas do teclado) para guiar o carrinho até a 🏁!</div>
+  <div class="maze-wrap">
+    <canvas id="mzc" class="maze-canvas"></canvas>
+    <div class="maze-controls">
+      <button class="mz-btn" onclick="mzMv(0,-1)">⬆️</button>
+    </div>
+    <div class="maze-controls">
+      <button class="mz-btn" onclick="mzMv(-1,0)">⬅️</button>
+      <button class="mz-btn" onclick="mzMv(0,1)">⬇️</button>
+      <button class="mz-btn" onclick="mzMv(1,0)">➡️</button>
+    </div>
+    <div class="maze-msg" id="mzmsg">Leve o 🚗 até a 🏁!</div>
+  </div>`;
+  const COLS=14,ROWS=10,CS=36;
+  const MAP=[[1,1,1,1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,1,0,0,0,0,0,0,0,0,1],[1,0,1,0,1,0,1,1,1,1,0,1,0,1],[1,0,1,0,0,0,0,0,0,1,0,1,0,1],[1,0,1,1,1,1,1,0,1,1,0,1,0,1],[1,0,0,0,0,0,1,0,0,0,0,1,0,1],[1,1,1,0,1,0,1,1,1,0,1,1,0,1],[1,0,0,0,1,0,0,0,1,0,0,0,0,1],[1,0,1,1,1,1,1,0,1,1,1,1,0,1],[1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
+  let cx=1,cy=1,won=false;const gx=12,gy=7;
+  const canvas=document.getElementById("mzc");const ctx=canvas.getContext("2d");
+  const maxW=Math.min(COLS*CS,window.innerWidth-50);const sc=maxW/(COLS*CS);
+  canvas.width=COLS*CS*sc;canvas.height=ROWS*CS*sc;ctx.scale(sc,sc);
+  function draw(){
+    ctx.clearRect(0,0,COLS*CS,ROWS*CS);
+    for(let r=0;r<ROWS;r++)for(let col=0;col<COLS;col++){
+      if(MAP[r][col]===1){ctx.fillStyle="#5B3FA0";ctx.beginPath();ctx.roundRect(col*CS+1,r*CS+1,CS-2,CS-2,4);ctx.fill();}
+      else{ctx.fillStyle="#F8F5FF";ctx.fillRect(col*CS,r*CS,CS,CS);}
+    }
+    ctx.font=`${CS*.6}px serif`;ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText("🏁",gx*CS+CS/2,gy*CS+CS/2);ctx.fillText("🚗",cx*CS+CS/2,cy*CS+CS/2);
+  }
+  draw();
+  window.mzMv=function(dx,dy){
+    if(won)return;const nx=cx+dx,ny=cy+dy;
+    if(nx<0||nx>=COLS||ny<0||ny>=ROWS||MAP[ny][nx]===1){showFb("🧱 Parede!",false);return;}
+    cx=nx;cy=ny;draw();
+    if(cx===gx&&cy===gy){won=true;document.getElementById("mzmsg").textContent="🎉 Chegou! Parabéns! 🏁";showFb("🚗💨 Chegou!",true,1500);addPt();setTimeout(()=>showDoneBtn(),700);}
+  };
+  const onKey=e=>{const m={"ArrowUp":[0,-1],"ArrowDown":[0,1],"ArrowLeft":[-1,0],"ArrowRight":[1,0]};if(m[e.key]){e.preventDefault();window.mzMv(...m[e.key]);}};
+  document.addEventListener("keydown",onKey);
+}
+
+/* ═══ FASE 17 — COMPLETE PALAVRAS ═══ */
+// word[blank]===correct ✓ todos verificados
+const WORDS=[
+  {e:"🐱",w:"GATO",  b:1,c:"A",o:["A","E","O","U"]},
+  {e:"🌞",w:"SOL",   b:0,c:"S",o:["S","B","P","T"]},
+  {e:"🍇",w:"UVA",   b:1,c:"V",o:["V","B","P","M"]},
+  {e:"🐟",w:"PEIXE", b:3,c:"X",o:["X","S","C","Z"]},
+  {e:"🎈",w:"BOLA",  b:2,c:"L",o:["L","R","N","M"]},
+  {e:"🏠",w:"CASA",  b:0,c:"C",o:["C","T","B","P"]},
+  {e:"🦁",w:"LEAO",  b:1,c:"E",o:["E","A","I","O"]},
+  {e:"🐸",w:"SAPO",  b:2,c:"P",o:["P","T","B","M"]},
+];
+function bWordComplete(c){
+  setMax(WORDS.length);let wSc=0;
+  c.innerHTML=`<div class="instr">✍️ Qual letra está faltando? Clique para completar!</div>
+  <div class="sbar">Certas: <span class="sv" id="wsc">0</span> / ${WORDS.length}</div>
+  <div class="wcgrid" id="wcg"></div>`;
+  const g=document.getElementById("wcg");
+  WORDS.forEach(({e,w,b,c:cor,o})=>{
+    const disp=w.split("").map((ch,i)=>i===b?'<span class="miss">_</span>':ch).join("");
+    const card=document.createElement("div");card.className="wccard";let solved=false;
+    card.innerHTML=`<div class="wcem">${e}</div><div class="wcw" id="ww${w}">${disp}</div><div class="wcopts"></div>`;
+    const od=card.querySelector(".wcopts");
+    [...o].sort(()=>Math.random()-.5).forEach(opt=>{
+      const btn=document.createElement("button");btn.className="wopt";btn.textContent=opt;
+      btn.onclick=()=>{
+        if(solved)return;
+        if(opt===cor){solved=true;btn.classList.add("ok");document.getElementById("ww"+w).innerHTML=w;od.querySelectorAll("button").forEach(x=>x.disabled=true);wSc++;document.getElementById("wsc").textContent=wSc;addPt();showFb("🌟 Isso mesmo!",true);if(wSc===WORDS.length)setTimeout(()=>showDoneBtn(),600);}
+        else{btn.classList.add("err");setTimeout(()=>btn.classList.remove("err"),600);showFb("Tente de novo!",false);}
+      };
+      od.appendChild(btn);
+    });
+    g.appendChild(card);
+  });
+}
+
+/* ═══ FASE 18 — HISTÓRIA ═══ */
+const STORY={
+  s0:{e:"🦁",t:`Era uma vez um leãozinho chamado <strong>Léo</strong> que morava numa floresta colorida. 🌈<br><br>Um dia, encontrou um mapa misterioso brilhando no chão!<br><br><strong>O que Léo faz?</strong>`,cs:[{t:"🗺️ Seguir o mapa sozinho!",n:"s1"},{t:"👫 Chamar os amigos!",n:"s2"}]},
+  s1:{e:"🦁💪",t:`Léo partiu corajoso! Após caminhar muito, chegou a um rio cheio de jacarés!<br><br><strong>Como atravessar?</strong>`,cs:[{t:"🌉 Atravessar pela ponte com cuidado!",n:"s3"},{t:"🏊 Tentar nadar no rio!",n:"s4"}]},
+  s2:{e:"🦁🐸🦋",t:`Léo chamou o Sapão (🐸) e a Bela Borboleta (🦋)!<br>Juntos, descobriram uma caverna brilhante no caminho.<br><br><strong>Entrar ou não?</strong>`,cs:[{t:"🕯️ Entrar com uma tocha acesa!",n:"s5"},{t:"🔙 Voltar para casa!",n:"s6"}]},
+  s3:{e:"🌉✨",t:`Léo atravessou devagar, passo a passo!<br><br>Do outro lado: um baú brilhante com <strong>livros mágicos de todo o mundo!</strong> 📚🌍`,cs:[{t:"📖 Abrir todos os livros!",n:"sw"}]},
+  s4:{e:"💦😅",t:`A corrente era forte! Um peixe dourado salvou Léo. 🐟<br><br>Léo aprendeu: <strong>pedir ajuda é muito inteligente!</strong>`,cs:[{t:"🌟 Continuar!",n:"s3"}]},
+  s5:{e:"🕯️🐦",t:`Na caverna, um pássaro dourado conhecia o caminho! 🐦<br><br>Guiou os três amigos até o tesouro: <strong>sementes que fazem flores cantarem à noite!</strong> 🌸🎵`,cs:[{t:"🌺 Plantar as sementes!",n:"sw"}]},
+  s6:{e:"🏠🌙",t:`Voltaram para casa antes do pôr do sol. 🌙<br><br>Léo aprendeu: <strong>saber quando parar também é coragem!</strong>`,cs:[{t:"😴 Dormir e sonhar!",n:"sw"}]},
+  sw:{e:"🏆🌟🎊",t:`<strong>PARABÉNS! Você completou a aventura do Leãozinho Léo!</strong> 🦁🌟<br><br>🌟 Coragem é tentar!<br>👫 Amigos tornam tudo melhor!<br>📚 O maior tesouro é aprender!<br>👨‍👩‍👧 Família é nosso lar!`,cs:[{t:"🔄 Ler de novo!",n:"s0"}]},
+};
+let stSt="s0";
+function bStory(c){
+  setMax(4);stSt="s0";let chN=0;
+  c.innerHTML=`<div class="instr">📖 Faça escolhas para guiar o Leãozinho Léo!</div>
+  <div class="stbox" id="stb"><div class="stem" id="stem"></div><div class="sttxt" id="sttxt"></div><div class="stchs" id="stchs"></div></div>`;
+  renderStory();
+  function renderStory(){
+    const nd=STORY[stSt];
+    document.getElementById("stem").textContent=nd.e;
+    document.getElementById("sttxt").innerHTML=nd.t;
+    const ch=document.getElementById("stchs");ch.innerHTML="";
+    nd.cs.forEach(({t,n})=>{
+      const b=document.createElement("button");b.className="stbtn";b.innerHTML=t;
+      b.onclick=()=>{if(n==="s0"){stSt="s0";renderStory();return;}stSt=n;chN++;if(chN<=4)addPt();renderStory();if(n==="sw"){showFb("🏆 Fim da aventura!",true,1500);setTimeout(()=>showDoneBtn(),800);}};
+      ch.appendChild(b);
+    });
+  }
+}
+
+/* FEEDBACK */
+function showFb(msg,ok,dur=950){
+  const p=document.getElementById("fbpop");p.textContent=msg;p.className="fbpop on "+(ok?"ok":"err");
+  setTimeout(()=>p.classList.remove("on"),dur);
+}
+
+/* CONFETTI */
+function confetti(){
+  const cols=["#FF6B9D","#FFD700","#7BC8F6","#2ECC71","#E74C3C","#9B59B6","#FFB347","#1ABC9C"];
+  for(let i=0;i<60;i++){
+    const el=document.createElement("div");el.className="cf";
+    el.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${cols[~~(Math.random()*cols.length)]};width:${7+Math.random()*10}px;height:${7+Math.random()*10}px;border-radius:${Math.random()>.5?"50%":"3px"};animation-duration:${1.5+Math.random()*1.7}s;animation-delay:${Math.random()*.9}s;`;
+    document.body.appendChild(el);setTimeout(()=>el.remove(),3600);
+  }
+}
+</script>
+
+<script>
+/* ─── SERVICE WORKER + PWA INSTALL ─── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registrado:', reg.scope))
+      .catch(err => console.log('SW erro:', err));
+  });
+}
+
+/* ─── INSTALL BUTTON ─── */
+let deferredPrompt = null;
+const installBanner = document.getElementById('install-banner');
+const installBtn = document.getElementById('install-btn');
+const dismissBtn = document.getElementById('dismiss-install');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBanner) installBanner.style.display = 'flex';
+});
+
+window.addEventListener('appinstalled', () => {
+  if (installBanner) installBanner.style.display = 'none';
+  deferredPrompt = null;
+});
+
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    if (installBanner) installBanner.style.display = 'none';
+  });
+}
+
+if (dismissBtn) {
+  dismissBtn.addEventListener('click', () => {
+    if (installBanner) installBanner.style.display = 'none';
+  });
+}
+
+/* iOS install hint */
+function isIos() {
+  return /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+}
+function isInStandaloneMode() {
+  return ('standalone' in window.navigator) && (window.navigator.standalone);
+}
+if (isIos() && !isInStandaloneMode()) {
+  const ioshint = document.getElementById('ios-hint');
+  if (ioshint) setTimeout(() => ioshint.style.display = 'flex', 2000);
+}
+</script>
+</body>
+</html>
