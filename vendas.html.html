@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mundo Mágico das Crianças – Ebook Interativo</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:#fff;color:#222;overflow-x:hidden;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#1a0533,#080618 50%,#001a33);
+  text-align:center;padding:60px 20px 50px;position:relative;overflow:hidden;
+}
+.hero-glow{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(255,107,157,.22),transparent 70%);
+}
+.hero-badge{
+  display:inline-block;background:rgba(255,215,0,.15);border:1.5px solid rgba(255,215,0,.4);
+  border-radius:50px;padding:6px 20px;font-size:13px;font-weight:800;color:#FFD700;
+  margin-bottom:20px;letter-spacing:.5px;
+}
+.hero h1{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(36px,8vw,68px);
+  background:linear-gradient(135deg,#FF6B9D,#FFD700,#7BC8F6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;margin-bottom:16px;
+}
+.hero-sub{
+  font-size:clamp(16px,3vw,22px);color:rgba(255,255,255,.78);
+  font-weight:700;max-width:620px;margin:0 auto 28px;line-height:1.6;
+}
+.hero-animals{font-size:clamp(32px,7vw,52px);margin-bottom:28px;letter-spacing:4px;}
+.btn-comprar{
+  display:inline-block;
+  background:linear-gradient(135deg,#FF6B9D,#FFB347);
+  color:#fff;font-family:'Fredoka One',cursive;font-size:clamp(18px,4vw,26px);
+  border:none;border-radius:60px;padding:18px 54px;cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 8px 32px rgba(255,107,157,.5);
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.btn-comprar::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);border-radius:inherit;}
+.btn-comprar:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 14px 40px rgba(255,107,157,.6);}
+.preco-hero{margin-top:20px;color:rgba(255,255,255,.6);font-size:15px;font-weight:700;}
+.preco-hero strong{color:#FFD700;font-size:22px;}
+
+/* ── PROBLEMA ── */
+.problema{background:#FFF5F5;padding:60px 20px;text-align:center;}
+.section-label{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#FF6B9D;margin-bottom:12px;}
+.section-title{font-family:'Fredoka One',cursive;font-size:clamp(24px,5vw,40px);color:#222;margin-bottom:16px;line-height:1.2;}
+.problema p{font-size:17px;color:#555;max-width:600px;margin:0 auto;line-height:1.8;}
+.dor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:800px;margin:36px auto 0;}
+.dor-card{background:#fff;border-radius:16px;padding:20px;border-left:4px solid #E74C3C;text-align:left;}
+.dor-emoji{font-size:28px;margin-bottom:8px;}
+.dor-text{font-size:15px;color:#444;font-weight:700;line-height:1.5;}
+
+/* ── SOLUÇÃO ── */
+.solucao{background:#fff;padding:60px 20px;text-align:center;}
+.solucao-inner{max-width:700px;margin:0 auto;}
+.destaque-box{
+  background:linear-gradient(135deg,#1a0533,#0D0B1F);
+  border-radius:24px;padding:36px 28px;margin:32px 0;
+  border:2px solid rgba(255,107,157,.3);
+}
+.destaque-box h3{font-family:'Fredoka One',cursive;font-size:28px;color:#FFD700;margin-bottom:12px;}
+.destaque-box p{color:rgba(255,255,255,.75);font-size:16px;line-height:1.8;}
+
+/* ── ATIVIDADES ── */
+.atividades{background:#F2EEFF;padding:60px 20px;text-align:center;}
+.ativ-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;max-width:860px;margin:32px auto 0;}
+.ativ-card{background:#fff;border-radius:16px;padding:16px 12px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.ativ-emoji{font-size:36px;margin-bottom:8px;}
+.ativ-name{font-family:'Fredoka One',cursive;font-size:15px;color:#333;}
+.ativ-desc{font-size:12px;color:#888;margin-top:4px;font-weight:700;}
+
+/* ── DIFERENCIAIS ── */
+.diferenciais{background:#fff;padding:60px 20px;text-align:center;}
+.dif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:860px;margin:32px auto 0;}
+.dif-card{background:#F8F5FF;border-radius:20px;padding:24px 20px;text-align:left;border:2px solid #E8E0FF;}
+.dif-icon{font-size:36px;margin-bottom:12px;}
+.dif-title{font-family:'Fredoka One',cursive;font-size:18px;color:#5B3FA0;margin-bottom:6px;}
+.dif-text{font-size:14px;color:#555;line-height:1.7;font-weight:700;}
+
+/* ── DEPOIMENTOS ── */
+.depoimentos{background:linear-gradient(135deg,#FF6B9D11,#FFD70011);padding:60px 20px;text-align:center;}
+.dep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;max-width:860px;margin:32px auto 0;}
+.dep-card{background:#fff;border-radius:20px;padding:24px 20px;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.07);}
+.dep-stars{font-size:18px;margin-bottom:10px;color:#FFD700;}
+.dep-text{font-size:15px;color:#444;line-height:1.7;font-style:italic;margin-bottom:14px;}
+.dep-author{font-weight:800;font-size:14px;color:#FF6B9D;}
+.dep-role{font-size:12px;color:#aaa;font-weight:700;}
+
+/* ── COMO FUNCIONA ── */
+.como{background:#fff;padding:60px 20px;text-align:center;}
+.passos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:860px;margin:32px auto 0;}
+.passo{text-align:center;padding:16px;}
+.passo-num{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FF6B9D,#FFB347);color:#fff;font-family:'Fredoka One',cursive;font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
+.passo-title{font-family:'Fredoka One',cursive;font-size:17px;color:#333;margin-bottom:6px;}
+.passo-text{font-size:13px;color:#666;font-weight:700;line-height:1.6;}
+
+/* ── GARANTIA ── */
+.garantia{background:#F0FFF8;padding:60px 20px;text-align:center;}
+.garantia-box{max-width:600px;margin:0 auto;background:#fff;border-radius:24px;padding:36px 28px;border:3px solid #2ECC71;box-shadow:0 8px 32px rgba(46,204,113,.15);}
+.garantia-box h3{font-family:'Fredoka One',cursive;font-size:28px;color:#2ECC71;margin:12px 0 10px;}
+.garantia-box p{font-size:16px;color:#555;line-height:1.8;}
+
+/* ── CTA FINAL ── */
+.cta-final{background:linear-gradient(160deg,#1a0533,#080618);padding:80px 20px;text-align:center;}
+.cta-final h2{font-family:'Fredoka One',cursive;font-size:clamp(28px,6vw,48px);
+  background:linear-gradient(135deg,#FF6B9D,#FFD700);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;}
+.cta-final p{color:rgba(255,255,255,.7);font-size:17px;max-width:500px;margin:0 auto 32px;line-height:1.7;font-weight:700;}
+.preco-box{background:rgba(255,255,255,.06);border:2px solid rgba(255,215,0,.3);border-radius:20px;padding:24px 32px;max-width:340px;margin:0 auto 28px;}
+.preco-de{font-size:16px;color:rgba(255,255,255,.4);text-decoration:line-through;margin-bottom:4px;}
+.preco-por{font-family:'Fredoka One',cursive;font-size:48px;color:#FFD700;line-height:1;}
+.preco-label{font-size:13px;color:rgba(255,255,255,.5);margin-top:6px;font-weight:700;}
+.garantia-mini{color:rgba(255,255,255,.5);font-size:13px;margin-top:16px;font-weight:700;}
+
+/* ── FOOTER ── */
+footer{background:#080618;padding:24px;text-align:center;color:rgba(255,255,255,.3);font-size:12px;font-weight:700;}
+
+/* ── FLUTUANTE ── */
+.float-btn{
+  position:fixed;bottom:24px;right:20px;z-index:999;
+  background:linear-gradient(135deg,#FF6B9D,#FFB347);
+  color:#fff;font-family:'Fredoka One',cursive;font-size:16px;
+  border:none;border-radius:50px;padding:14px 24px;cursor:pointer;
+  text-decoration:none;
+  box-shadow:0 6px 24px rgba(255,107,157,.5);
+  animation:pulse-btn 2s ease-in-out infinite;
+  display:none;
+}
+@keyframes pulse-btn{0%,100%{box-shadow:0 6px 24px rgba(255,107,157,.5);}50%{box-shadow:0 6px 40px rgba(255,107,157,.8);}}
+
+@media(max-width:480px){
+  .btn-comprar{padding:16px 36px;}
+  .preco-box{padding:20px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- BOTÃO FLUTUANTE -->
+<a href="#comprar" class="float-btn" id="floatBtn">🛒 Quero agora!</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">✨ LANÇAMENTO ESPECIAL — Oferta por tempo limitado</div>
+  <div class="hero-animals">🐱🐶🦁🐸🦋</div>
+  <h1>Mundo Mágico<br>das Crianças</h1>
+  <p class="hero-sub">O ebook interativo que a criança instala no celular como um app e aprende brincando — sem depender de internet ou plataforma!</p>
+  <a href="#comprar" class="btn-comprar">🚀 Quero meu filho aprendendo agora!</a>
+  <p class="preco-hero">Apenas <strong>R$ 19,90</strong> — Acesso imediato após o pagamento</p>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema">
+  <div class="section-label">Você já passou por isso?</div>
+  <h2 class="section-title">A realidade de muitos pais e mães hoje</h2>
+  <p>Celular na mão da criança, mas só assistindo vídeos aleatórios no YouTube. Nenhum aprendizado, nenhum estímulo educativo. Isso muda agora.</p>
+  <div class="dor-grid">
+    <div class="dor-card">
+      <div class="dor-emoji">📱</div>
+      <div class="dor-text">"Meu filho passa horas no celular mas não aprende nada de útil"</div>
+    </div>
+    <div class="dor-card">
+      <div class="dor-emoji">😴</div>
+      <div class="dor-text">"Os apps educativos são chatos, a criança larga em 2 minutos"</div>
+    </div>
+    <div class="dor-card">
+      <div class="dor-emoji">💸</div>
+      <div class="dor-text">"Já gastei com cursinhos e materiais que meu filho não quis usar"</div>
+    </div>
+    <div class="dor-card">
+      <div class="dor-emoji">🤯</div>
+      <div class="dor-text">"Não tenho tempo de ficar do lado ensinando tudo que ele precisa"</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUÇÃO -->
+<section class="solucao">
+  <div class="solucao-inner">
+    <div class="section-label">A solução que você estava esperando</div>
+    <h2 class="section-title">Aprendizado real. Diversão de verdade.</h2>
+    <p style="font-size:17px;color:#555;line-height:1.8;margin-bottom:0;">O <strong>Mundo Mágico das Crianças</strong> é um ebook interativo com 18 atividades educativas que ensinam letras, números, cores, emoções, família e muito mais — de um jeito que a criança <em>pede para jogar de novo</em>.</p>
+    <div class="destaque-box">
+      <h3>📱 Instala no celular como um app</h3>
+      <p>Após a compra, a criança instala com um toque na tela inicial do celular. Abre igual ao WhatsApp — sem precisar entrar em nenhuma plataforma, sem senha, sem internet. O ícone fica ali, sempre à disposição.</p>
+    </div>
+    <p style="font-size:17px;color:#555;line-height:1.8;">Funciona em <strong>qualquer celular</strong> — Android, iPhone, tablet ou computador. Sem instalar app da loja, sem assinar nada, sem mensalidade.</p>
+  </div>
+</section>
+
+<!-- ATIVIDADES -->
+<section class="atividades">
+  <div class="section-label">Conteúdo completo</div>
+  <h2 class="section-title">18 Fases para aprender e se divertir</h2>
+  <p style="font-size:16px;color:#555;max-width:600px;margin:0 auto;font-weight:700;">Cada fase é desbloqueada com o progresso da criança — quanto mais ela aprende, mais fases aparecem!</p>
+  <div class="ativ-grid">
+    <div class="ativ-card"><div class="ativ-emoji">🔤</div><div class="ativ-name">Letras</div><div class="ativ-desc">Letra → Palavra</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🔢</div><div class="ativ-name">Números</div><div class="ativ-desc">Número → Quantidade</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🎨</div><div class="ativ-name">Cores</div><div class="ativ-desc">Cor → Nome</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🐾</div><div class="ativ-name">Animais</div><div class="ativ-desc">Animal → Nome</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">👨‍👩‍👧</div><div class="ativ-name">Família</div><div class="ativ-desc">Pai, mãe, avó...</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🏠</div><div class="ativ-name">Objetos</div><div class="ativ-desc">Objeto → Lugar</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">😄</div><div class="ativ-name">Emoções</div><div class="ativ-desc">Reconhecer sentimentos</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🌿</div><div class="ativ-name">Natureza</div><div class="ativ-desc">Animal → Habitat</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🩺</div><div class="ativ-name">Profissões</div><div class="ativ-desc">Profissão → Ferramenta</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🔺</div><div class="ativ-name">Formas</div><div class="ativ-desc">Geométricas</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">⏰</div><div class="ativ-name">Relógio</div><div class="ativ-desc">Aprender as horas</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🎵</div><div class="ativ-name">Piano</div><div class="ativ-desc">Tocar músicas</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🃏</div><div class="ativ-name">Memória</div><div class="ativ-desc">Achar os pares</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🔢</div><div class="ativ-name">Sequências</div><div class="ativ-desc">Padrões lógicos</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🍎</div><div class="ativ-name">Alimentação</div><div class="ativ-desc">Saudável ou não?</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">🚗</div><div class="ativ-name">Labirinto</div><div class="ativ-desc">Guiar o carrinho</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">✍️</div><div class="ativ-name">Palavras</div><div class="ativ-desc">Complete a palavra</div></div>
+    <div class="ativ-card"><div class="ativ-emoji">📖</div><div class="ativ-name">História</div><div class="ativ-desc">Aventura interativa</div></div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="diferenciais">
+  <div class="section-label">Por que é diferente</div>
+  <h2 class="section-title">Tudo que outros apps não têm</h2>
+  <div class="dif-grid">
+    <div class="dif-card">
+      <div class="dif-icon">📲</div>
+      <div class="dif-title">Instala como app</div>
+      <div class="dif-text">Fica na tela inicial do celular com ícone próprio. A criança abre com um toque — igual qualquer app, sem precisar de loja de aplicativos.</div>
+    </div>
+    <div class="dif-card">
+      <div class="dif-icon">✈️</div>
+      <div class="dif-title">Funciona sem internet</div>
+      <div class="dif-text">Após abrir uma vez, funciona offline. Perfeito para viagens, restaurantes, sala de espera — sem depender de Wi-Fi ou dados móveis.</div>
+    </div>
+    <div class="dif-card">
+      <div class="dif-icon">⭐</div>
+      <div class="dif-title">Sistema de estrelas</div>
+      <div class="dif-text">A criança coleciona estrelas e desbloqueia novas fases. A gamificação mantém o interesse e a motivação por muito mais tempo.</div>
+    </div>
+    <div class="dif-card">
+      <div class="dif-icon">🧠</div>
+      <div class="dif-title">Base pedagógica real</div>
+      <div class="dif-text">Alinhado ao que se aprende na pré-escola: letras, números, formas, emoções, família. Não é só entretenimento — é aprendizado de verdade.</div>
+    </div>
+    <div class="dif-card">
+      <div class="dif-icon">💾</div>
+      <div class="dif-title">Progresso salvo</div>
+      <div class="dif-text">O progresso da criança é salvo automaticamente. Ela pode parar e continuar de onde parou, sem perder nada.</div>
+    </div>
+    <div class="dif-card">
+      <div class="dif-icon">📱</div>
+      <div class="dif-title">Funciona em tudo</div>
+      <div class="dif-text">Android, iPhone, iPad, tablet e computador. Um só produto que funciona em qualquer dispositivo da família.</div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos">
+  <div class="section-label">O que os pais estão dizendo</div>
+  <h2 class="section-title">Resultados reais de famílias reais</h2>
+  <div class="dep-grid">
+    <div class="dep-card">
+      <div class="dep-stars">⭐⭐⭐⭐⭐</div>
+      <p class="dep-text">"Minha filha de 5 anos não larga! Ela mesma pede para jogar e fica feliz cada vez que ganha uma estrela. Nunca vi ela tão animada estudando!"</p>
+      <div class="dep-author">Ana Paula M.</div>
+      <div class="dep-role">Mãe da Isabela, 5 anos</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-stars">⭐⭐⭐⭐⭐</div>
+      <p class="dep-text">"O que me impressionou foi instalar como app! Meu filho acha que é um jogo e fica me mostrando tudo que aprendeu. Em uma semana já reconhece todas as letras!"</p>
+      <div class="dep-author">Rodrigo S.</div>
+      <div class="dep-role">Pai do Miguel, 6 anos</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-stars">⭐⭐⭐⭐⭐</div>
+      <p class="dep-text">"Finalmente um produto educativo que funciona offline! Na viagem de férias minha filha ficou entretida e aprendendo, sem precisar de internet no avião."</p>
+      <div class="dep-author">Carla F.</div>
+      <div class="dep-role">Mãe da Sofia, 5 anos</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como">
+  <div class="section-label">Simples assim</div>
+  <h2 class="section-title">Do pagamento ao aprendizado em 3 passos</h2>
+  <div class="passos">
+    <div class="passo">
+      <div class="passo-num">1</div>
+      <div class="passo-title">Compre agora</div>
+      <div class="passo-text">Clique no botão, pague via PIX, cartão ou boleto. Aprovação na hora.</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">2</div>
+      <div class="passo-title">Receba o link</div>
+      <div class="passo-text">O link de acesso chega no seu e-mail automaticamente após o pagamento.</div>
+    </div>
+    <div class="passo">
+      <div class="passo-num">3</div>
+      <div class="passo-title">Instale no celular</div>
+      <div class="passo-text">Abra o link, toque em "Instalar" e pronto — o ícone aparece na tela! É só brincar e aprender.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GARANTIA -->
+<section class="garantia">
+  <div class="section-label">Risco zero para você</div>
+  <div class="garantia-box">
+    <div style="font-size:64px;">🛡️</div>
+    <h3>Garantia de 7 dias</h3>
+    <p>Se por qualquer motivo você não ficar satisfeito, devolvemos 100% do seu dinheiro em até 7 dias. Sem burocracia, sem perguntas. Você não tem nada a perder.</p>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="comprar">
+  <h2>Seu filho merece aprender<br>se divertindo! 🌟</h2>
+  <p>Junte-se a centenas de famílias que já transformaram o tempo de tela em tempo de aprendizado.</p>
+  <div class="preco-box">
+    <div class="preco-de">De R$ 37,00</div>
+    <div class="preco-por">R$ 19,90</div>
+    <div class="preco-label">pagamento único • acesso imediato</div>
+  </div>
+  <a href="SEU_LINK_KIWIFY_AQUI" class="btn-comprar">🚀 Quero o Mundo Mágico agora!</a>
+  <p class="garantia-mini">🛡️ Garantia de 7 dias • 📱 Instala no celular • ✈️ Funciona sem internet</p>
+</section>
+
+<footer>
+  © 2025 Mundo Mágico das Crianças · Todos os direitos reservados
+</footer>
+
+<script>
+const floatBtn = document.getElementById('floatBtn');
+window.addEventListener('scroll', () => {
+  floatBtn.style.display = window.scrollY > 400 ? 'block' : 'none';
+});
+</script>
+</body>
+</html>
